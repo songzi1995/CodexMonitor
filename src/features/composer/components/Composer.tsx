@@ -10,6 +10,7 @@ import { useComposerAutocompleteState } from "../hooks/useComposerAutocompleteSt
 import { ComposerInput } from "./ComposerInput";
 import { ComposerMetaBar } from "./ComposerMetaBar";
 import { ComposerQueue } from "./ComposerQueue";
+import { useI18n } from "../../../i18n";
 
 type ComposerProps = {
   onSend: (text: string, images: string[]) => void;
@@ -88,7 +89,7 @@ export function Composer({
   queuedMessages = [],
   onEditQueued,
   onDeleteQueued,
-  sendLabel = "Send",
+  sendLabel,
   draftText = "",
   onDraftChange,
   attachedImages = [],
@@ -112,12 +113,14 @@ export function Composer({
   dictationHint = null,
   onDismissDictationHint,
 }: ComposerProps) {
+  const { t } = useI18n();
   const [text, setText] = useState(draftText);
   const [selectionStart, setSelectionStart] = useState<number | null>(null);
   const internalRef = useRef<HTMLTextAreaElement | null>(null);
   const textareaRef = externalTextareaRef ?? internalRef;
   const isDictationBusy = dictationState !== "idle";
   const canSend = text.trim().length > 0 || attachedImages.length > 0;
+  const resolvedSendLabel = sendLabel ?? t("composer.send");
 
   useEffect(() => {
     setText((prev) => (prev === draftText ? prev : draftText));
@@ -240,7 +243,7 @@ export function Composer({
       <ComposerInput
         text={text}
         disabled={disabled}
-        sendLabel={sendLabel}
+        sendLabel={resolvedSendLabel}
         canStop={canStop}
         canSend={canSend}
         isProcessing={isProcessing}

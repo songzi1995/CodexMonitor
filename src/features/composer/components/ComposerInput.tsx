@@ -5,6 +5,7 @@ import { ImagePlus, Mic, Square } from "lucide-react";
 import { useComposerImageDrop } from "../hooks/useComposerImageDrop";
 import { ComposerAttachments } from "./ComposerAttachments";
 import { DictationWaveform } from "../../dictation/components/DictationWaveform";
+import { useI18n } from "../../../i18n";
 
 type ComposerInputProps = {
   text: string;
@@ -71,6 +72,7 @@ export function ComposerInput({
   onHighlightIndex,
   onSelectSuggestion,
 }: ComposerInputProps) {
+  const { t } = useI18n();
   const suggestionListRef = useRef<HTMLDivElement | null>(null);
   const suggestionRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const maxTextareaHeight = 120;
@@ -141,19 +143,19 @@ export function ComposerInput({
   const micDisabled =
     disabled || dictationState === "processing" || !dictationEnabled || !onToggleDictation;
   const micAriaLabel = allowOpenDictationSettings
-    ? "Open dictation settings"
+    ? t("composer.dictation_open_settings")
     : dictationState === "processing"
-      ? "Dictation processing"
+      ? t("composer.dictation_processing_label")
       : isDictating
-        ? "Stop dictation"
-        : "Start dictation";
+        ? t("composer.dictation_stop")
+        : t("composer.dictation_start");
   const micTitle = allowOpenDictationSettings
-    ? "Dictation disabled. Open settings"
+    ? t("composer.dictation_disabled")
     : dictationState === "processing"
-      ? "Processing dictation"
+      ? t("composer.dictation_processing_title")
       : isDictating
-        ? "Stop dictation"
-        : "Start dictation";
+        ? t("composer.dictation_stop")
+        : t("composer.dictation_start");
   const handleMicClick = () => {
     if (allowOpenDictationSettings) {
       onOpenDictationSettings?.();
@@ -186,8 +188,8 @@ export function ComposerInput({
             className="composer-attach"
             onClick={onAddAttachment}
             disabled={disabled || !onAddAttachment}
-            aria-label="Add image"
-            title="Add image"
+            aria-label={t("composer.add_image")}
+            title={t("composer.add_image")}
           >
             <ImagePlus size={14} aria-hidden />
           </button>
@@ -195,8 +197,8 @@ export function ComposerInput({
             ref={textareaRef}
             placeholder={
               disabled
-                ? "Review in progress. Chat will re-enable when it completes."
-                : "Ask Codex to do something..."
+                ? t("composer.placeholder_disabled")
+                : t("composer.placeholder_active")
             }
             value={text}
             onChange={(event) =>
@@ -231,7 +233,7 @@ export function ComposerInput({
               className="ghost composer-dictation-error-dismiss"
               onClick={onDismissDictationError}
             >
-              Dismiss
+              {t("composer.dismiss")}
             </button>
           </div>
         )}
@@ -244,7 +246,7 @@ export function ComposerInput({
                 className="ghost composer-dictation-error-dismiss"
                 onClick={onDismissDictationHint}
               >
-                Dismiss
+                {t("composer.dismiss")}
               </button>
             )}
           </div>
@@ -323,7 +325,7 @@ export function ComposerInput({
         }`}
         onClick={handleActionClick}
         disabled={disabled || isDictationBusy || (!canStop && !canSend)}
-        aria-label={canStop ? "Stop" : sendLabel}
+        aria-label={canStop ? t("composer.stop") : sendLabel}
       >
         {canStop ? (
           <>

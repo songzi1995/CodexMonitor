@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { AccessMode, ThreadTokenUsage } from "../../../types";
+import { useI18n } from "../../../i18n";
 
 type ComposerMetaBarProps = {
   disabled: boolean;
@@ -32,6 +33,7 @@ export function ComposerMetaBar({
   onSelectAccessMode,
   contextUsage = null,
 }: ComposerMetaBarProps) {
+  const { t } = useI18n();
   const contextWindow = contextUsage?.modelContextWindow ?? null;
   const lastTokens = contextUsage?.last.totalTokens ?? 0;
   const totalTokens = contextUsage?.total.totalTokens ?? 0;
@@ -44,6 +46,12 @@ export function ComposerMetaBar({
             Math.min(Math.max((usedTokens / contextWindow) * 100, 0), 100),
         )
       : null;
+  const contextFreeLabel =
+    contextFreePercent === null
+      ? t("composer.context_free_unknown")
+      : t("composer.context_free", {
+          percent: Math.round(contextFreePercent),
+        });
 
   return (
     <div className="composer-bar">
@@ -62,14 +70,14 @@ export function ComposerMetaBar({
             </span>
             <select
               className="composer-select composer-select--model"
-              aria-label="Collaboration mode"
+              aria-label={t("composer.collaboration_mode")}
               value={selectedCollaborationModeId ?? ""}
               onChange={(event) =>
                 onSelectCollaborationMode(event.target.value || null)
               }
               disabled={disabled}
             >
-              <option value="">Default mode</option>
+              <option value="">{t("composer.collaboration_default")}</option>
               {collaborationModes.map((mode) => (
                 <option key={mode.id} value={mode.id}>
                   {mode.label}
@@ -108,12 +116,14 @@ export function ComposerMetaBar({
           </span>
           <select
             className="composer-select composer-select--model"
-            aria-label="Model"
+            aria-label={t("composer.model_label")}
             value={selectedModelId ?? ""}
             onChange={(event) => onSelectModel(event.target.value)}
             disabled={disabled}
           >
-            {models.length === 0 && <option value="">No models</option>}
+            {models.length === 0 && (
+              <option value="">{t("composer.no_models")}</option>
+            )}
             {models.map((model) => (
               <option key={model.id} value={model.id}>
                 {model.displayName || model.model}
@@ -152,12 +162,14 @@ export function ComposerMetaBar({
           </span>
           <select
             className="composer-select composer-select--effort"
-            aria-label="Thinking mode"
+            aria-label={t("composer.thinking_mode")}
             value={selectedEffort ?? ""}
             onChange={(event) => onSelectEffort(event.target.value)}
             disabled={disabled}
           >
-            {reasoningOptions.length === 0 && <option value="">Default</option>}
+            {reasoningOptions.length === 0 && (
+              <option value="">{t("composer.reasoning_default")}</option>
+            )}
             {reasoningOptions.map((effort) => (
               <option key={effort} value={effort}>
                 {effort}
@@ -185,32 +197,24 @@ export function ComposerMetaBar({
           </span>
           <select
             className="composer-select composer-select--approval"
-            aria-label="Agent access"
+            aria-label={t("composer.access_label")}
             disabled={disabled}
             value={accessMode}
             onChange={(event) =>
               onSelectAccessMode(event.target.value as AccessMode)
             }
           >
-            <option value="read-only">Read only</option>
-            <option value="current">On-Request</option>
-            <option value="full-access">Full access</option>
+            <option value="read-only">{t("composer.access_read_only")}</option>
+            <option value="current">{t("composer.access_on_request")}</option>
+            <option value="full-access">{t("composer.access_full")}</option>
           </select>
         </div>
       </div>
       <div className="composer-context">
         <div
           className="composer-context-ring"
-          data-tooltip={
-            contextFreePercent === null
-              ? "Context free --"
-              : `Context free ${Math.round(contextFreePercent)}%`
-          }
-          aria-label={
-            contextFreePercent === null
-              ? "Context free --"
-              : `Context free ${Math.round(contextFreePercent)}%`
-          }
+          data-tooltip={contextFreeLabel}
+          aria-label={contextFreeLabel}
           style={
             {
               "--context-free": contextFreePercent ?? 0,

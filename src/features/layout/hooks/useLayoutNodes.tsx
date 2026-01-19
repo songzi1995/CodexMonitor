@@ -17,6 +17,7 @@ import { TabBar } from "../../app/components/TabBar";
 import { TabletNav } from "../../app/components/TabletNav";
 import { TerminalDock } from "../../terminal/components/TerminalDock";
 import { TerminalPanel } from "../../terminal/components/TerminalPanel";
+import { useI18n } from "../../../i18n";
 import type {
   AccessMode,
   ApprovalRequest,
@@ -311,6 +312,7 @@ type LayoutNodesResult = {
 };
 
 export function useLayoutNodes(options: LayoutNodesOptions): LayoutNodesResult {
+  const { t } = useI18n();
   const activeThreadStatus = options.activeThreadId
     ? options.threadStatusById[options.activeThreadId] ?? null
     : null;
@@ -378,7 +380,11 @@ export function useLayoutNodes(options: LayoutNodesOptions): LayoutNodesResult {
       disabled={options.isReviewing}
       contextUsage={options.activeTokenUsage}
       queuedMessages={options.activeQueue}
-      sendLabel={options.isProcessing && !options.steerEnabled ? "Queue" : "Send"}
+      sendLabel={
+        options.isProcessing && !options.steerEnabled
+          ? t("composer.queue")
+          : t("composer.send")
+      }
       steerEnabled={options.steerEnabled}
       isProcessing={options.isProcessing}
       draftText={options.draftText}
