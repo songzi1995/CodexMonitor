@@ -51,6 +51,71 @@
         "subtitle": "Play a sound when a long-running agent finishes while the window is unfocused.",
         "test": "Test sound"
       }
+    },
+    "dictation": {
+      "title": "Dictation",
+      "subtitle": "Enable microphone dictation with on-device transcription.",
+      "enable": {
+        "title": "Enable dictation",
+        "subtitle": "Downloads the selected Whisper model on first use."
+      },
+      "model": "Dictation model",
+      "model_help": "{{note}} Download size: {{size}}.",
+      "preferred_language": "Preferred dictation language",
+      "preferred_language_help": "Auto-detect stays on; this nudges the decoder toward your preference.",
+      "hold_key": "Hold-to-dictate key",
+      "hold_key_help": "Hold the key to start dictation, release to stop and process.",
+      "model_status": "Model status ({{model}})",
+      "status": {
+        "ready": "Ready for dictation.",
+        "missing": "Model not downloaded yet.",
+        "downloading": "Downloading model...",
+        "error": "Download error."
+      },
+      "actions": {
+        "download": "Download model",
+        "cancel": "Cancel download",
+        "remove": "Remove model"
+      },
+      "language_options": {
+        "auto": "Auto-detect only",
+        "en": "English",
+        "es": "Spanish",
+        "fr": "French",
+        "de": "German",
+        "it": "Italian",
+        "pt": "Portuguese",
+        "nl": "Dutch",
+        "sv": "Swedish",
+        "no": "Norwegian",
+        "da": "Danish",
+        "fi": "Finnish",
+        "pl": "Polish",
+        "tr": "Turkish",
+        "ru": "Russian",
+        "uk": "Ukrainian",
+        "ja": "Japanese",
+        "ko": "Korean",
+        "zh": "Chinese"
+      },
+      "hold_key_options": {
+        "off": "Off",
+        "alt": "Option / Alt",
+        "shift": "Shift",
+        "control": "Control",
+        "meta": "Command / Meta"
+      }
+    },
+    "shortcuts": {
+      "title": "Shortcuts",
+      "subtitle": "Customize keyboard shortcuts for common actions.",
+      "cycle_model": "Cycle model",
+      "cycle_access": "Cycle access mode",
+      "cycle_reasoning": "Cycle reasoning mode",
+      "shortcut_help": "Press a new shortcut while focused. Default: {{shortcut}}",
+      "shortcut_help_simple": "Default: {{shortcut}}",
+      "input_placeholder": "Type shortcut",
+      "clear": "Clear"
     }
   }
 }

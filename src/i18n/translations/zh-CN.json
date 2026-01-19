@@ -51,6 +51,71 @@
         "subtitle": "当窗口失焦且长任务完成时播放提示音。",
         "test": "测试声音"
       }
+    },
+    "dictation": {
+      "title": "语音输入",
+      "subtitle": "启用本地转写的麦克风语音输入。",
+      "enable": {
+        "title": "启用语音输入",
+        "subtitle": "首次使用时会下载选定的 Whisper 模型。"
+      },
+      "model": "语音模型",
+      "model_help": "{{note}} 下载大小：{{size}}。",
+      "preferred_language": "偏好的语音语言",
+      "preferred_language_help": "自动检测仍开启；该选项会偏向你的语言。",
+      "hold_key": "按住开始语音的按键",
+      "hold_key_help": "按住开始语音，松开后停止并处理。",
+      "model_status": "模型状态（{{model}}）",
+      "status": {
+        "ready": "可用。",
+        "missing": "模型尚未下载。",
+        "downloading": "正在下载模型...",
+        "error": "下载失败。"
+      },
+      "actions": {
+        "download": "下载模型",
+        "cancel": "取消下载",
+        "remove": "移除模型"
+      },
+      "language_options": {
+        "auto": "仅自动检测",
+        "en": "English",
+        "es": "Español",
+        "fr": "Français",
+        "de": "Deutsch",
+        "it": "Italiano",
+        "pt": "Português",
+        "nl": "Nederlands",
+        "sv": "Svenska",
+        "no": "Norsk",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "pl": "Polski",
+        "tr": "Türkçe",
+        "ru": "Русский",
+        "uk": "Українська",
+        "ja": "日本語",
+        "ko": "한국어",
+        "zh": "中文"
+      },
+      "hold_key_options": {
+        "off": "关闭",
+        "alt": "Option / Alt",
+        "shift": "Shift",
+        "control": "Control",
+        "meta": "Command / Meta"
+      }
+    },
+    "shortcuts": {
+      "title": "快捷键",
+      "subtitle": "自定义常用操作的快捷键。",
+      "cycle_model": "切换模型",
+      "cycle_access": "切换访问模式",
+      "cycle_reasoning": "切换推理模式",
+      "shortcut_help": "聚焦输入框后按下新快捷键。默认：{{shortcut}}",
+      "shortcut_help_simple": "默认：{{shortcut}}",
+      "input_placeholder": "输入快捷键",
+      "clear": "清除"
     }
   }
 }

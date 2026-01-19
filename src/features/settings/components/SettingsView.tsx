@@ -771,15 +771,17 @@ export function SettingsView({
             )}
             {activeSection === "dictation" && (
               <section className="settings-section">
-                <div className="settings-section-title">Dictation</div>
+                <div className="settings-section-title">{t("settings.dictation.title")}</div>
                 <div className="settings-section-subtitle">
-                  Enable microphone dictation with on-device transcription.
+                  {t("settings.dictation.subtitle")}
                 </div>
                 <div className="settings-toggle-row">
                   <div>
-                    <div className="settings-toggle-title">Enable dictation</div>
+                    <div className="settings-toggle-title">
+                      {t("settings.dictation.enable.title")}
+                    </div>
                     <div className="settings-toggle-subtitle">
-                      Downloads the selected Whisper model on first use.
+                      {t("settings.dictation.enable.subtitle")}
                     </div>
                   </div>
                   <button
@@ -813,7 +815,7 @@ export function SettingsView({
                 </div>
                 <div className="settings-field">
                   <label className="settings-field-label" htmlFor="dictation-model">
-                    Dictation model
+                    {t("settings.dictation.model")}
                   </label>
                   <select
                     id="dictation-model"
@@ -833,12 +835,15 @@ export function SettingsView({
                     ))}
                   </select>
                   <div className="settings-help">
-                    {selectedDictationModel.note} Download size: {selectedDictationModel.size}.
+                    {t("settings.dictation.model_help", {
+                      note: selectedDictationModel.note,
+                      size: selectedDictationModel.size,
+                    })}
                   </div>
                 </div>
                 <div className="settings-field">
                   <label className="settings-field-label" htmlFor="dictation-language">
-                    Preferred dictation language
+                    {t("settings.dictation.preferred_language")}
                   </label>
                   <select
                     id="dictation-language"
@@ -851,33 +856,33 @@ export function SettingsView({
                       })
                     }
                   >
-                    <option value="">Auto-detect only</option>
-                    <option value="en">English</option>
-                    <option value="es">Spanish</option>
-                    <option value="fr">French</option>
-                    <option value="de">German</option>
-                    <option value="it">Italian</option>
-                    <option value="pt">Portuguese</option>
-                    <option value="nl">Dutch</option>
-                    <option value="sv">Swedish</option>
-                    <option value="no">Norwegian</option>
-                    <option value="da">Danish</option>
-                    <option value="fi">Finnish</option>
-                    <option value="pl">Polish</option>
-                    <option value="tr">Turkish</option>
-                    <option value="ru">Russian</option>
-                    <option value="uk">Ukrainian</option>
-                    <option value="ja">Japanese</option>
-                    <option value="ko">Korean</option>
-                    <option value="zh">Chinese</option>
+                    <option value="">{t("settings.dictation.language_options.auto")}</option>
+                    <option value="en">{t("settings.dictation.language_options.en")}</option>
+                    <option value="es">{t("settings.dictation.language_options.es")}</option>
+                    <option value="fr">{t("settings.dictation.language_options.fr")}</option>
+                    <option value="de">{t("settings.dictation.language_options.de")}</option>
+                    <option value="it">{t("settings.dictation.language_options.it")}</option>
+                    <option value="pt">{t("settings.dictation.language_options.pt")}</option>
+                    <option value="nl">{t("settings.dictation.language_options.nl")}</option>
+                    <option value="sv">{t("settings.dictation.language_options.sv")}</option>
+                    <option value="no">{t("settings.dictation.language_options.no")}</option>
+                    <option value="da">{t("settings.dictation.language_options.da")}</option>
+                    <option value="fi">{t("settings.dictation.language_options.fi")}</option>
+                    <option value="pl">{t("settings.dictation.language_options.pl")}</option>
+                    <option value="tr">{t("settings.dictation.language_options.tr")}</option>
+                    <option value="ru">{t("settings.dictation.language_options.ru")}</option>
+                    <option value="uk">{t("settings.dictation.language_options.uk")}</option>
+                    <option value="ja">{t("settings.dictation.language_options.ja")}</option>
+                    <option value="ko">{t("settings.dictation.language_options.ko")}</option>
+                    <option value="zh">{t("settings.dictation.language_options.zh")}</option>
                   </select>
                   <div className="settings-help">
-                    Auto-detect stays on; this nudges the decoder toward your preference.
+                    {t("settings.dictation.preferred_language_help")}
                   </div>
                 </div>
                 <div className="settings-field">
                   <label className="settings-field-label" htmlFor="dictation-hold-key">
-                    Hold-to-dictate key
+                    {t("settings.dictation.hold_key")}
                   </label>
                   <select
                     id="dictation-hold-key"
@@ -890,28 +895,35 @@ export function SettingsView({
                       })
                     }
                   >
-                    <option value="">Off</option>
-                    <option value="alt">Option / Alt</option>
-                    <option value="shift">Shift</option>
-                    <option value="control">Control</option>
-                    <option value="meta">Command / Meta</option>
+                    <option value="">{t("settings.dictation.hold_key_options.off")}</option>
+                    <option value="alt">{t("settings.dictation.hold_key_options.alt")}</option>
+                    <option value="shift">{t("settings.dictation.hold_key_options.shift")}</option>
+                    <option value="control">
+                      {t("settings.dictation.hold_key_options.control")}
+                    </option>
+                    <option value="meta">{t("settings.dictation.hold_key_options.meta")}</option>
                   </select>
                   <div className="settings-help">
-                    Hold the key to start dictation, release to stop and process.
+                    {t("settings.dictation.hold_key_help")}
                   </div>
                 </div>
                 {dictationModelStatus && (
                   <div className="settings-field">
                     <div className="settings-field-label">
-                      Model status ({selectedDictationModel.label})
+                      {t("settings.dictation.model_status", {
+                        model: selectedDictationModel.label,
+                      })}
                     </div>
                     <div className="settings-help">
-                      {dictationModelStatus.state === "ready" && "Ready for dictation."}
-                      {dictationModelStatus.state === "missing" && "Model not downloaded yet."}
+                      {dictationModelStatus.state === "ready" &&
+                        t("settings.dictation.status.ready")}
+                      {dictationModelStatus.state === "missing" &&
+                        t("settings.dictation.status.missing")}
                       {dictationModelStatus.state === "downloading" &&
-                        "Downloading model..."}
+                        t("settings.dictation.status.downloading")}
                       {dictationModelStatus.state === "error" &&
-                        (dictationModelStatus.error ?? "Download error.")}
+                        (dictationModelStatus.error ??
+                          t("settings.dictation.status.error"))}
                     </div>
                     {dictationProgress && (
                       <div className="settings-download-progress">
@@ -943,7 +955,7 @@ export function SettingsView({
                           onClick={onDownloadDictationModel}
                           disabled={!onDownloadDictationModel}
                         >
-                          Download model
+                          {t("settings.dictation.actions.download")}
                         </button>
                       )}
                       {dictationModelStatus.state === "downloading" && (
@@ -953,7 +965,7 @@ export function SettingsView({
                           onClick={onCancelDictationDownload}
                           disabled={!onCancelDictationDownload}
                         >
-                          Cancel download
+                          {t("settings.dictation.actions.cancel")}
                         </button>
                       )}
                       {dictationReady && (
@@ -963,7 +975,7 @@ export function SettingsView({
                           onClick={onRemoveDictationModel}
                           disabled={!onRemoveDictationModel}
                         >
-                          Remove model
+                          {t("settings.dictation.actions.remove")}
                         </button>
                       )}
                     </div>
@@ -973,12 +985,14 @@ export function SettingsView({
             )}
             {activeSection === "shortcuts" && (
               <section className="settings-section">
-                <div className="settings-section-title">Shortcuts</div>
+                <div className="settings-section-title">{t("settings.shortcuts.title")}</div>
                 <div className="settings-section-subtitle">
-                  Customize composer shortcuts for cycling modes.
+                  {t("settings.shortcuts.subtitle")}
                 </div>
                 <div className="settings-field">
-                  <div className="settings-field-label">Cycle model</div>
+                  <div className="settings-field-label">
+                    {t("settings.shortcuts.cycle_model")}
+                  </div>
                   <div className="settings-field-row">
                     <input
                       className="settings-input settings-input--shortcut"
@@ -986,7 +1000,7 @@ export function SettingsView({
                       onKeyDown={(event) =>
                         handleShortcutKeyDown(event, "composerModelShortcut")
                       }
-                      placeholder="Type shortcut"
+                      placeholder={t("settings.shortcuts.input_placeholder")}
                       readOnly
                     />
                     <button
@@ -994,15 +1008,19 @@ export function SettingsView({
                       className="ghost settings-button-compact"
                       onClick={() => void updateShortcut("composerModelShortcut", null)}
                     >
-                      Clear
+                      {t("settings.shortcuts.clear")}
                     </button>
                   </div>
                   <div className="settings-help">
-                    Press a new shortcut while focused. Default: {formatShortcut("cmd+shift+m")}
+                    {t("settings.shortcuts.shortcut_help", {
+                      shortcut: formatShortcut("cmd+shift+m"),
+                    })}
                   </div>
                 </div>
                 <div className="settings-field">
-                  <div className="settings-field-label">Cycle access mode</div>
+                  <div className="settings-field-label">
+                    {t("settings.shortcuts.cycle_access")}
+                  </div>
                   <div className="settings-field-row">
                     <input
                       className="settings-input settings-input--shortcut"
@@ -1010,7 +1028,7 @@ export function SettingsView({
                       onKeyDown={(event) =>
                         handleShortcutKeyDown(event, "composerAccessShortcut")
                       }
-                      placeholder="Type shortcut"
+                      placeholder={t("settings.shortcuts.input_placeholder")}
                       readOnly
                     />
                     <button
@@ -1018,15 +1036,19 @@ export function SettingsView({
                       className="ghost settings-button-compact"
                       onClick={() => void updateShortcut("composerAccessShortcut", null)}
                     >
-                      Clear
+                      {t("settings.shortcuts.clear")}
                     </button>
                   </div>
                   <div className="settings-help">
-                    Default: {formatShortcut("cmd+shift+a")}
+                    {t("settings.shortcuts.shortcut_help_simple", {
+                      shortcut: formatShortcut("cmd+shift+a"),
+                    })}
                   </div>
                 </div>
                 <div className="settings-field">
-                  <div className="settings-field-label">Cycle reasoning mode</div>
+                  <div className="settings-field-label">
+                    {t("settings.shortcuts.cycle_reasoning")}
+                  </div>
                   <div className="settings-field-row">
                     <input
                       className="settings-input settings-input--shortcut"
@@ -1034,7 +1056,7 @@ export function SettingsView({
                       onKeyDown={(event) =>
                         handleShortcutKeyDown(event, "composerReasoningShortcut")
                       }
-                      placeholder="Type shortcut"
+                      placeholder={t("settings.shortcuts.input_placeholder")}
                       readOnly
                     />
                     <button
@@ -1042,11 +1064,13 @@ export function SettingsView({
                       className="ghost settings-button-compact"
                       onClick={() => void updateShortcut("composerReasoningShortcut", null)}
                     >
-                      Clear
+                      {t("settings.shortcuts.clear")}
                     </button>
                   </div>
                   <div className="settings-help">
-                    Default: {formatShortcut("cmd+shift+r")}
+                    {t("settings.shortcuts.shortcut_help_simple", {
+                      shortcut: formatShortcut("cmd+shift+r"),
+                    })}
                   </div>
                 </div>
               </section>
