@@ -234,5 +234,44 @@
     "copy": "复制",
     "clear": "清空",
     "empty": "暂无调试事件。"
+  },
+  "git": {
+    "diff_unavailable": "无法显示差异。",
+    "no_changes": "未检测到改动。",
+    "refreshing_diff": "正在刷新差异...",
+    "panel": {
+      "label": "Git 面板",
+      "view": "Git 面板视图",
+      "diff": "差异",
+      "log": "日志",
+      "issues": "问题",
+      "prs": "PR"
+    },
+    "pr": {
+      "summary": "拉取请求概览",
+      "jump_first": "跳到第一个文件",
+      "activity": "动态",
+      "draft": "草稿",
+      "empty_body": "没有提供描述。",
+      "show_all": "显示全部",
+      "collapse": "收起",
+      "loading_comments": "正在加载评论...",
+      "no_comments": "暂无评论。",
+      "comment_count_single": "{{count}} 条评论",
+      "comment_count_plural": "{{count}} 条评论",
+      "earlier_comments_single": "{{count}} 条更早的评论",
+      "earlier_comments_plural": "{{count}} 条更早的评论",
+      "no_comment_body": "没有评论内容。"
+    },
+    "issues": {
+      "title": "问题",
+      "empty": "暂无问题。",
+      "header": "GitHub 问题",
+      "open_count": "{{count}} 个未关闭"
+    },
+    "prs": {
+      "header": "GitHub 拉取请求",
+      "open_count": "{{count}} 个未关闭"
+    }
   }
 }

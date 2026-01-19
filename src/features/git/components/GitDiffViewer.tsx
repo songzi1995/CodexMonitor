@@ -7,6 +7,7 @@ import { workerFactory } from "../../../utils/diffsWorker";
 import type { GitHubPullRequest, GitHubPullRequestComment } from "../../../types";
 import { formatRelativeTime } from "../../../utils/time";
 import { Markdown } from "../../messages/components/Markdown";
+import { useI18n } from "../../../i18n";
 
 type GitDiffViewerItem = {
   path: string;
@@ -56,6 +57,7 @@ const DiffCard = memo(function DiffCard({
   entry,
   isSelected,
 }: DiffCardProps) {
+  const { t } = useI18n();
   const diffOptions = useMemo(
     () => ({
       diffStyle: "split" as const,
@@ -107,7 +109,9 @@ const DiffCard = memo(function DiffCard({
           />
         </div>
       ) : (
-        <div className="diff-viewer-placeholder">Diff unavailable.</div>
+        <div className="diff-viewer-placeholder">
+          {t("git.diff_unavailable")}
+        </div>
       )}
     </div>
   );
@@ -125,6 +129,7 @@ export function GitDiffViewer({
   pullRequestCommentsError = null,
   onActivePathChange,
 }: GitDiffViewerProps) {
+  const { t } = useI18n();
   const containerRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const activePathRef = useRef<string | null>(null);
@@ -320,7 +325,7 @@ export function GitDiffViewer({
     >
       <div className="diff-viewer" ref={containerRef}>
         {pullRequest && (
-          <section className="diff-viewer-pr" aria-label="Pull request summary">
+          <section className="diff-viewer-pr" aria-label={t("git.pr.summary")}>
             <div className="diff-viewer-pr-header">
               <div className="diff-viewer-pr-header-row">
                 <div className="diff-viewer-pr-title">
@@ -336,7 +341,7 @@ export function GitDiffViewer({
                     type="button"
                     className="ghost diff-viewer-pr-jump"
                     onClick={handleScrollToFirstFile}
-                    aria-label="Jump to first file"
+                    aria-label={t("git.pr.jump_first")}
                   >
                     <span className="diff-viewer-pr-jump-add">
                       +{diffStats.additions}
@@ -361,7 +366,7 @@ export function GitDiffViewer({
                   {pullRequest.baseRefName} ← {pullRequest.headRefName}
                 </span>
                 {pullRequest.isDraft && (
-                  <span className="diff-viewer-pr-pill">Draft</span>
+                  <span className="diff-viewer-pr-pill">{t("git.pr.draft")}</span>
                 )}
               </div>
             </div>
@@ -373,16 +378,22 @@ export function GitDiffViewer({
                 />
               ) : (
                 <div className="diff-viewer-pr-empty">
-                  No description provided.
+                  {t("git.pr.empty_body")}
                 </div>
               )}
             </div>
             <div className="diff-viewer-pr-timeline">
               <div className="diff-viewer-pr-timeline-header">
-                <span className="diff-viewer-pr-timeline-title">Activity</span>
+                <span className="diff-viewer-pr-timeline-title">
+                  {t("git.pr.activity")}
+                </span>
                 <span className="diff-viewer-pr-timeline-count">
-                  {sortedComments.length} comment
-                  {sortedComments.length === 1 ? "" : "s"}
+                  {t(
+                    sortedComments.length === 1
+                      ? "git.pr.comment_count_single"
+                      : "git.pr.comment_count_plural",
+                    { count: sortedComments.length },
+                  )}
                 </span>
                 {hiddenCommentCount > 0 && (
                   <button
@@ -390,7 +401,7 @@ export function GitDiffViewer({
                     className="ghost diff-viewer-pr-timeline-button"
                     onClick={() => setIsTimelineExpanded(true)}
                   >
-                    Show all
+                    {t("git.pr.show_all")}
                   </button>
                 )}
                 {isTimelineExpanded && sortedComments.length > visibleCommentCount && (
@@ -399,14 +410,14 @@ export function GitDiffViewer({
                     className="ghost diff-viewer-pr-timeline-button"
                     onClick={() => setIsTimelineExpanded(false)}
                   >
-                    Collapse
+                    {t("git.pr.collapse")}
                   </button>
                 )}
               </div>
               <div className="diff-viewer-pr-timeline-list">
                 {pullRequestCommentsLoading && (
                   <div className="diff-viewer-pr-timeline-state">
-                    Loading comments…
+                    {t("git.pr.loading_comments")}
                   </div>
                 )}
                 {pullRequestCommentsError && (
@@ -418,13 +429,17 @@ export function GitDiffViewer({
                   !pullRequestCommentsError &&
                   !sortedComments.length && (
                     <div className="diff-viewer-pr-timeline-state">
-                      No comments yet.
+                      {t("git.pr.no_comments")}
                     </div>
                   )}
                 {hiddenCommentCount > 0 && !isTimelineExpanded && (
                   <div className="diff-viewer-pr-timeline-divider">
-                    {hiddenCommentCount} earlier comment
-                    {hiddenCommentCount === 1 ? "" : "s"}
+                    {t(
+                      hiddenCommentCount === 1
+                        ? "git.pr.earlier_comments_single"
+                        : "git.pr.earlier_comments_plural",
+                      { count: hiddenCommentCount },
+                    )}
                   </div>
                 )}
                 {visibleComments.map((comment) => {
@@ -453,7 +468,7 @@ export function GitDiffViewer({
                           />
                         ) : (
                           <div className="diff-viewer-pr-timeline-text">
-                            No comment body.
+                            {t("git.pr.no_comment_body")}
                           </div>
                         )}
                       </div>
@@ -480,11 +495,11 @@ export function GitDiffViewer({
         {error && <div className="diff-viewer-empty">{error}</div>}
         {!error && isLoading && diffs.length > 0 && (
           <div className="diff-viewer-loading diff-viewer-loading-overlay">
-            Refreshing diff...
+            {t("git.refreshing_diff")}
           </div>
         )}
         {!error && !isLoading && !diffs.length && (
-          <div className="diff-viewer-empty">No changes detected.</div>
+          <div className="diff-viewer-empty">{t("git.no_changes")}</div>
         )}
         {!error && diffs.length > 0 && (
           <div

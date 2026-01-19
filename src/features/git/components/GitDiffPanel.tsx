@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { formatRelativeTime } from "../../../utils/time";
 import { PanelTabs, type PanelTabId } from "../../layout/components/PanelTabs";
+import { useI18n } from "../../../i18n";
 
 type GitDiffPanelProps = {
   mode: "diff" | "log" | "issues" | "prs";
@@ -214,6 +215,7 @@ export function GitDiffPanel({
   onClearGitRoot,
   onPickGitRoot,
 }: GitDiffPanelProps) {
+  const { t } = useI18n();
   const ModeIcon = (() => {
     switch (mode) {
       case "log":
@@ -388,7 +390,7 @@ export function GitDiffPanel({
     <aside className="diff-panel">
       <div className="git-panel-header">
         <PanelTabs active={filePanelMode} onSelect={onFilePanelModeChange} />
-        <div className="git-panel-select" role="group" aria-label="Git panel">
+        <div className="git-panel-select" role="group" aria-label={t("git.panel.label")}>
           <span className="git-panel-select-icon" aria-hidden>
             <ModeIcon />
           </span>
@@ -398,12 +400,12 @@ export function GitDiffPanel({
             onChange={(event) =>
               onModeChange(event.target.value as GitDiffPanelProps["mode"])
             }
-            aria-label="Git panel view"
+            aria-label={t("git.panel.view")}
           >
-            <option value="diff">Diff</option>
-            <option value="log">Log</option>
-            <option value="issues">Issues</option>
-            <option value="prs">PRs</option>
+            <option value="diff">{t("git.panel.diff")}</option>
+            <option value="log">{t("git.panel.log")}</option>
+            <option value="issues">{t("git.panel.issues")}</option>
+            <option value="prs">{t("git.panel.prs")}</option>
           </select>
         </div>
       </div>
@@ -428,23 +430,23 @@ export function GitDiffPanel({
       ) : mode === "issues" ? (
         <>
           <div className="diff-status diff-status-issues">
-            <span>GitHub issues</span>
+            <span>{t("git.issues.header")}</span>
             {issuesLoading && <span className="git-panel-spinner" aria-hidden />}
           </div>
           <div className="git-log-sync">
-            <span>{issuesTotal} open</span>
+            <span>{t("git.issues.open_count", { count: issuesTotal })}</span>
           </div>
         </>
       ) : (
         <>
           <div className="diff-status diff-status-issues">
-            <span>GitHub pull requests</span>
+            <span>{t("git.prs.header")}</span>
             {pullRequestsLoading && (
               <span className="git-panel-spinner" aria-hidden />
             )}
           </div>
           <div className="git-log-sync">
-            <span>{pullRequestsTotal} open</span>
+            <span>{t("git.prs.open_count", { count: pullRequestsTotal })}</span>
           </div>
         </>
       )}
@@ -561,7 +563,7 @@ export function GitDiffPanel({
             </div>
           )}
           {!error && !stagedFiles.length && !unstagedFiles.length && (
-            <div className="diff-empty">No changes detected.</div>
+            <div className="diff-empty">{t("git.no_changes")}</div>
           )}
           {(stagedFiles.length > 0 || unstagedFiles.length > 0) && (
             <>
@@ -837,7 +839,7 @@ export function GitDiffPanel({
         <div className="git-issues-list">
           {issuesError && <div className="diff-error">{issuesError}</div>}
           {!issuesError && !issuesLoading && !issues.length && (
-            <div className="diff-empty">No open issues.</div>
+            <div className="diff-empty">{t("git.issues.empty")}</div>
           )}
           {issues.map((issue) => {
             const relativeTime = formatRelativeTime(new Date(issue.updatedAt).getTime());

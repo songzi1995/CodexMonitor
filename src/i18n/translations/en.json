@@ -234,5 +234,44 @@
     "copy": "Copy",
     "clear": "Clear",
     "empty": "No debug events yet."
+  },
+  "git": {
+    "diff_unavailable": "Diff unavailable.",
+    "no_changes": "No changes detected.",
+    "refreshing_diff": "Refreshing diff...",
+    "panel": {
+      "label": "Git panel",
+      "view": "Git panel view",
+      "diff": "Diff",
+      "log": "Log",
+      "issues": "Issues",
+      "prs": "PRs"
+    },
+    "pr": {
+      "summary": "Pull request summary",
+      "jump_first": "Jump to first file",
+      "activity": "Activity",
+      "draft": "Draft",
+      "empty_body": "No description provided.",
+      "show_all": "Show all",
+      "collapse": "Collapse",
+      "loading_comments": "Loading comments…",
+      "no_comments": "No comments yet.",
+      "comment_count_single": "{{count}} comment",
+      "comment_count_plural": "{{count}} comments",
+      "earlier_comments_single": "{{count}} earlier comment",
+      "earlier_comments_plural": "{{count}} earlier comments",
+      "no_comment_body": "No comment body."
+    },
+    "issues": {
+      "title": "Issues",
+      "empty": "No issues found.",
+      "header": "GitHub issues",
+      "open_count": "{{count}} open"
+    },
+    "prs": {
+      "header": "GitHub pull requests",
+      "open_count": "{{count}} open"
+    }
   }
 }
