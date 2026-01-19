@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { getVersion } from "@tauri-apps/api/app";
 import { openUrl } from "@tauri-apps/plugin-opener";
+import { useI18n } from "../../../i18n";
 
 const GITHUB_URL = "https://github.com/Dimillian/CodexMonitor";
 const TWITTER_URL = "https://x.com/dimillian";
 
 export function AboutView() {
   const [version, setVersion] = useState<string | null>(null);
+  const { t } = useI18n();
 
   useEffect(() => {
     let active = true;
@@ -33,15 +35,15 @@ export function AboutView() {
           <img
             className="about-icon"
             src="/app-icon.png"
-            alt="Codex Monitor icon"
+            alt={t("about.icon_alt")}
           />
-          <div className="about-title">Codex Monitor</div>
+          <div className="about-title">{t("about.title")}</div>
         </div>
         <div className="about-version">
-          {version ? `Version ${version}` : "Version —"}
+          {version ? t("about.version", { version }) : t("about.version_unknown")}
         </div>
         <div className="about-tagline">
-          Monitor the situation of your Codex agents
+          {t("about.tagline")}
         </div>
         <div className="about-divider" />
         <div className="about-links">
@@ -50,7 +52,7 @@ export function AboutView() {
             className="about-link"
             onClick={() => openUrl(GITHUB_URL)}
           >
-            GitHub
+            {t("about.github")}
           </button>
           <span className="about-link-sep">|</span>
           <button
@@ -58,10 +60,10 @@ export function AboutView() {
             className="about-link"
             onClick={() => openUrl(TWITTER_URL)}
           >
-            Twitter
+            {t("about.twitter")}
           </button>
         </div>
-        <div className="about-footer">Made with ♥ by Codex & Dimillian</div>
+        <div className="about-footer">{t("about.made_by")}</div>
       </div>
     </div>
   );

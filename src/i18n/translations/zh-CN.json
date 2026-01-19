@@ -191,5 +191,48 @@
     "actions": {
       "go_projects": "返回项目"
     }
+  },
+  "home": {
+    "hero_title": "Codex Monitor",
+    "hero_subtitle": "在本地项目中编排代理。",
+    "latest_agents": "最新代理",
+    "agent_replied": "代理已回复。",
+    "running": "运行中",
+    "loading_agents": "正在加载代理",
+    "empty_title": "暂无代理活动",
+    "empty_subtitle": "开始一个对话后，最新回复会显示在这里。",
+    "open_project": "打开项目",
+    "add_workspace": "添加工作区"
+  },
+  "update": {
+    "title": "更新",
+    "checking": "正在检查更新...",
+    "available": "有新版本可用。",
+    "later": "稍后",
+    "update": "更新",
+    "downloading": "正在下载更新...",
+    "installing": "正在安装更新...",
+    "restarting": "正在重启...",
+    "failed": "更新失败。",
+    "dismiss": "关闭",
+    "retry": "重试",
+    "downloaded": "{{size}} 已下载"
+  },
+  "about": {
+    "icon_alt": "Codex Monitor 图标",
+    "title": "Codex Monitor",
+    "version": "版本 {{version}}",
+    "version_unknown": "版本 —",
+    "tagline": "监控 Codex 代理的运行状态",
+    "github": "GitHub",
+    "twitter": "Twitter",
+    "made_by": "由 Codex & Dimillian 用 ♥ 制作"
+  },
+  "debug": {
+    "resize_label": "调整调试面板大小",
+    "title": "调试",
+    "copy": "复制",
+    "clear": "清空",
+    "empty": "暂无调试事件。"
   }
 }

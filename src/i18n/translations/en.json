@@ -191,5 +191,48 @@
     "actions": {
       "go_projects": "Go to projects"
     }
+  },
+  "home": {
+    "hero_title": "Codex Monitor",
+    "hero_subtitle": "Orchestrate agents across your local projects.",
+    "latest_agents": "Latest agents",
+    "agent_replied": "Agent replied.",
+    "running": "Running",
+    "loading_agents": "Loading agents",
+    "empty_title": "No agent activity yet",
+    "empty_subtitle": "Start a thread to see the latest responses here.",
+    "open_project": "Open Project",
+    "add_workspace": "Add Workspace"
+  },
+  "update": {
+    "title": "Update",
+    "checking": "Checking for updates...",
+    "available": "A new version is available.",
+    "later": "Later",
+    "update": "Update",
+    "downloading": "Downloading update...",
+    "installing": "Installing update...",
+    "restarting": "Restarting...",
+    "failed": "Update failed.",
+    "dismiss": "Dismiss",
+    "retry": "Retry",
+    "downloaded": "{{size}} downloaded"
+  },
+  "about": {
+    "icon_alt": "Codex Monitor icon",
+    "title": "Codex Monitor",
+    "version": "Version {{version}}",
+    "version_unknown": "Version —",
+    "tagline": "Monitor the situation of your Codex agents",
+    "github": "GitHub",
+    "twitter": "Twitter",
+    "made_by": "Made with ♥ by Codex & Dimillian"
+  },
+  "debug": {
+    "resize_label": "Resize debug panel",
+    "title": "Debug",
+    "copy": "Copy",
+    "clear": "Clear",
+    "empty": "No debug events yet."
   }
 }
