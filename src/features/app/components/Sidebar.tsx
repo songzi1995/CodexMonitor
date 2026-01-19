@@ -16,6 +16,7 @@ import { useSidebarScrollFade } from "../hooks/useSidebarScrollFade";
 import { useThreadRows } from "../hooks/useThreadRows";
 import { getUsageLabels } from "../utils/usageLabels";
 import { formatRelativeTimeShort } from "../../../utils/time";
+import { useI18n } from "../../../i18n";
 
 const COLLAPSED_GROUPS_STORAGE_KEY = "codexmonitor.collapsedGroups";
 const ADD_MENU_WIDTH = 200;
@@ -102,6 +103,7 @@ export function Sidebar({
   onLoadOlderThreads,
   onReloadWorkspaceThreads,
 }: SidebarProps) {
+  const { t } = useI18n();
   const [expandedWorkspaces, setExpandedWorkspaces] = useState(
     new Set<string>(),
   );
@@ -272,7 +274,7 @@ export function Sidebar({
           {pinnedThreadRows.length > 0 && (
             <div className="pinned-section">
               <div className="workspace-group-header">
-                <div className="workspace-group-label">Pinned</div>
+                <div className="workspace-group-label">{t("threads.pinned")}</div>
               </div>
               <PinnedThreadList
                 rows={pinnedThreadRows}
@@ -359,7 +361,7 @@ export function Sidebar({
                                 onAddAgent(entry);
                               }}
                             >
-                              New agent
+                              {t("workspaces.new_agent")}
                             </button>
                             <button
                               className="workspace-add-option"
@@ -369,7 +371,7 @@ export function Sidebar({
                                 onAddWorktreeAgent(entry);
                               }}
                             >
-                              New worktree agent
+                              {t("workspaces.new_worktree_agent")}
                             </button>
                           </div>,
                           document.body,
@@ -427,7 +429,7 @@ export function Sidebar({
             );
           })}
           {!groupedWorkspaces.length && (
-            <div className="empty">Add a workspace to start.</div>
+            <div className="empty">{t("sidebar.empty")}</div>
           )}
         </div>
       </div>

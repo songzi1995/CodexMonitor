@@ -4,7 +4,10 @@
     "save": "保存",
     "cancel": "取消",
     "reset": "重置",
-    "loading": "加载中..."
+    "loading": "加载中...",
+    "create": "创建",
+    "delete": "删除",
+    "edit": "编辑"
   },
   "settings": {
     "language": {
@@ -310,6 +313,125 @@
     "prs": {
       "header": "GitHub 拉取请求",
       "open_count": "{{count}} 个未关闭"
+    }
+  },
+  "layout": {
+    "resize": {
+      "sidebar": "调整侧边栏大小",
+      "right_panel": "调整右侧面板大小",
+      "plan_panel": "调整计划面板大小",
+      "projects": "调整项目栏大小"
+    },
+    "toggle": {
+      "hide_threads": "隐藏对话侧边栏",
+      "show_threads": "显示对话侧边栏",
+      "hide_git": "隐藏 Git 侧边栏",
+      "show_git": "显示 Git 侧边栏"
+    }
+  },
+  "plan": {
+    "title": "计划",
+    "empty_waiting": "等待计划生成...",
+    "empty": "暂无计划。"
+  },
+  "sidebar": {
+    "empty": "添加工作区开始使用。",
+    "open_home": "打开主页",
+    "add_workspace": "添加工作区",
+    "open_settings": "打开设置",
+    "settings": "设置",
+    "open_debug": "打开调试日志",
+    "debug_log": "调试日志"
+  },
+  "threads": {
+    "pinned": "置顶",
+    "show_less": "收起",
+    "more": "更多...",
+    "load_older": "加载更早的...",
+    "loading_agents": "正在加载代理",
+    "rename": {
+      "title": "重命名对话",
+      "current": "当前名称：“{{name}}”",
+      "label": "新名称",
+      "action": "重命名"
+    }
+  },
+  "workspaces": {
+    "connect": "连接",
+    "add_agent_options": "添加代理选项",
+    "show_agents": "显示代理",
+    "hide_agents": "隐藏代理",
+    "worktrees": "工作树",
+    "expand_group": "展开分组",
+    "collapse_group": "收起分组",
+    "new_agent": "新建代理",
+    "new_worktree_agent": "新建工作树代理",
+    "worktree_prompt": {
+      "title": "新建工作树代理",
+      "subtitle": "在“{{name}}”下创建工作树。",
+      "branch_label": "分支名称"
+    }
+  },
+  "usage": {
+    "session": "会话",
+    "weekly": "每周"
+  },
+  "files": {
+    "count_matches": "{{count}} 项匹配",
+    "count_files": "{{count}} 个文件",
+    "count_none": "暂无文件",
+    "count_loading": "正在加载文件",
+    "toggle_expand": "展开所有文件夹",
+    "toggle_collapse": "折叠所有文件夹",
+    "filter_placeholder": "过滤文件和文件夹",
+    "filter_aria": "过滤文件和文件夹",
+    "empty_matches": "未找到匹配项。",
+    "empty_files": "没有可用文件。",
+    "reveal_finder": "在 Finder 中显示"
+  },
+  "prompts": {
+    "count": "{{count}} 条提示词",
+    "none": "暂无提示词",
+    "filter_placeholder": "过滤提示词",
+    "filter_aria": "过滤提示词",
+    "section": {
+      "workspace": "工作区提示词",
+      "general": "通用提示词"
+    },
+    "add_workspace": "添加工作区提示词",
+    "add_general": "添加通用提示词",
+    "empty_workspace_title": "还没有工作区提示词",
+    "empty_workspace_prefix": "在此创建，或将 .md 文件放入",
+    "empty_workspace_suffix": "。",
+    "empty_general_title": "还没有通用提示词",
+    "empty_general_prefix": "在此创建，或将 .md 文件放入",
+    "empty_general_suffix": "。",
+    "workspace_folder": "工作区提示词文件夹",
+    "general_folder": "~/.codex/prompts",
+    "args_placeholder": "参数",
+    "args_aria": "{{name}} 的参数",
+    "send": "发送",
+    "send_new": "新建代理",
+    "send_current_title": "发送到当前代理",
+    "send_new_title": "发送到新代理",
+    "actions_label": "提示词操作",
+    "delete_confirm": "删除这个提示词？",
+    "move_to_workspace": "移动到工作区",
+    "move_to_general": "移动到通用",
+    "editor": {
+      "name": "名称",
+      "name_placeholder": "提示词名称",
+      "scope": "范围",
+      "scope_workspace": "工作区",
+      "scope_general": "通用",
+      "description": "描述",
+      "description_placeholder": "可选描述",
+      "argument_hint": "参数提示",
+      "argument_hint_placeholder": "可选参数提示",
+      "content": "内容",
+      "content_placeholder": "提示词内容",
+      "error_name_required": "名称不能为空。",
+      "error_name_whitespace": "名称不能包含空白字符。"
     }
   }
 }

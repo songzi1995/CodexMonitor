@@ -12,6 +12,7 @@ import { Menu, MenuItem } from "@tauri-apps/api/menu";
 import { LogicalPosition } from "@tauri-apps/api/dpi";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { MoreHorizontal, Plus, ScrollText, Search } from "lucide-react";
+import { useI18n } from "../../../i18n";
 
 type PromptPanelProps = {
   prompts: CustomPromptOption[];
@@ -75,6 +76,7 @@ export function PromptPanel({
   onRevealWorkspacePrompts,
   onRevealGeneralPrompts,
 }: PromptPanelProps) {
+  const { t } = useI18n();
   const [query, setQuery] = useState("");
   const [argsByPrompt, setArgsByPrompt] = useState<Record<string, string>>({});
   const [editor, setEditor] = useState<PromptEditorState | null>(null);
@@ -167,6 +169,7 @@ export function PromptPanel({
 
   const totalCount = filteredPrompts.length;
   const hasPrompts = totalCount > 0;
+  const promptCountSuffix = totalCount === 1 ? "" : "s";
 
   const handleArgsChange = (key: string, value: string) => {
     setArgsByPrompt((prev) => ({ ...prev, [key]: value }));
@@ -204,11 +207,11 @@ export function PromptPanel({
     }
     const name = editor.name.trim();
     if (!name) {
-      setEditorError("Name is required.");
+      setEditorError(t("prompts.editor.error_name_required"));
       return;
     }
     if (/\s/.test(name)) {
-      setEditorError("Name cannot include whitespace.");
+      setEditorError(t("prompts.editor.error_name_whitespace"));
       return;
     }
     setEditorError(null);
@@ -288,15 +291,18 @@ export function PromptPanel({
     const menu = await Menu.new({
       items: [
         await MenuItem.new({
-          text: "Edit",
+          text: t("common.edit"),
           action: () => startEdit(prompt),
         }),
         await MenuItem.new({
-          text: `Move to ${nextScope === "workspace" ? "workspace" : "general"}`,
+          text:
+            nextScope === "workspace"
+              ? t("prompts.move_to_workspace")
+              : t("prompts.move_to_general"),
           action: () => void handleMove(prompt, nextScope),
         }),
         await MenuItem.new({
-          text: "Delete",
+          text: t("common.delete"),
           action: () => handleDeleteRequest(prompt),
         }),
       ],
@@ -327,10 +333,10 @@ export function PromptPanel({
             <input
               className="prompt-args-input"
               type="text"
-              placeholder={hint ?? "Arguments"}
+              placeholder={hint ?? t("prompts.args_placeholder")}
               value={argsValue}
               onChange={(event) => handleArgsChange(key, event.target.value)}
-              aria-label={`Arguments for ${prompt.name}`}
+              aria-label={t("prompts.args_aria", { name: prompt.name })}
             />
           ) : null}
           <button
@@ -343,9 +349,9 @@ export function PromptPanel({
               }
               void onSendPrompt(text);
             }}
-            title="Send to current agent"
+            title={t("prompts.send_current_title")}
           >
-            Send
+            {t("prompts.send")}
           </button>
           <button
             type="button"
@@ -357,36 +363,36 @@ export function PromptPanel({
               }
               void onSendPromptToNewAgent(text);
             }}
-            title="Send to a new agent"
+            title={t("prompts.send_new_title")}
           >
-            New agent
+            {t("prompts.send_new")}
           </button>
           <button
             type="button"
             className="ghost icon-button prompt-action-menu"
             onClick={(event) => void showPromptMenu(event, prompt)}
-            aria-label="Prompt actions"
-            title="Prompt actions"
+            aria-label={t("prompts.actions_label")}
+            title={t("prompts.actions_label")}
           >
             <MoreHorizontal aria-hidden />
           </button>
         </div>
         {pendingDeletePath === prompt.path && (
           <div className="prompt-delete-confirm">
-            <span>Delete this prompt?</span>
+            <span>{t("prompts.delete_confirm")}</span>
             <button
               type="button"
               className="ghost prompt-action"
               onClick={() => void handleDeleteConfirm(prompt)}
             >
-              Delete
+              {t("common.delete")}
             </button>
             <button
               type="button"
               className="ghost prompt-action"
               onClick={() => setPendingDeletePath(null)}
             >
-              Cancel
+              {t("common.cancel")}
             </button>
           </div>
         )}
@@ -399,24 +405,26 @@ export function PromptPanel({
       <div className="git-panel-header">
         <PanelTabs active={filePanelMode} onSelect={onFilePanelModeChange} />
         <div className="prompt-panel-meta">
-          {hasPrompts ? `${totalCount} prompt${totalCount === 1 ? "" : "s"}` : "No prompts"}
+          {hasPrompts
+            ? t("prompts.count", { count: totalCount, suffix: promptCountSuffix })
+            : t("prompts.none")}
         </div>
       </div>
       {editor && (
         <div className="prompt-editor">
           <div className="prompt-editor-row">
             <label className="prompt-editor-label">
-              Name
+              {t("prompts.editor.name")}
               <input
                 className="prompt-args-input"
                 type="text"
                 value={editor.name}
                 onChange={(event) => updateEditor({ name: event.target.value })}
-                placeholder="Prompt name"
+                placeholder={t("prompts.editor.name_placeholder")}
               />
             </label>
             <label className="prompt-editor-label">
-              Scope
+              {t("prompts.editor.scope")}
               <select
                 className="prompt-scope-select"
                 value={editor.scope}
@@ -427,40 +435,40 @@ export function PromptPanel({
                 }
                 disabled={editor.mode === "edit"}
               >
-                <option value="workspace">Workspace</option>
-                <option value="global">General</option>
+                <option value="workspace">{t("prompts.editor.scope_workspace")}</option>
+                <option value="global">{t("prompts.editor.scope_general")}</option>
               </select>
             </label>
           </div>
           <div className="prompt-editor-row">
             <label className="prompt-editor-label">
-              Description
+              {t("prompts.editor.description")}
               <input
                 className="prompt-args-input"
                 type="text"
                 value={editor.description}
                 onChange={(event) => updateEditor({ description: event.target.value })}
-                placeholder="Optional description"
+                placeholder={t("prompts.editor.description_placeholder")}
               />
             </label>
             <label className="prompt-editor-label">
-              Argument hint
+              {t("prompts.editor.argument_hint")}
               <input
                 className="prompt-args-input"
                 type="text"
                 value={editor.argumentHint}
                 onChange={(event) => updateEditor({ argumentHint: event.target.value })}
-                placeholder="Optional argument hint"
+                placeholder={t("prompts.editor.argument_hint_placeholder")}
               />
             </label>
           </div>
           <label className="prompt-editor-label">
-            Content
+            {t("prompts.editor.content")}
             <textarea
               className="prompt-editor-textarea"
               value={editor.content}
               onChange={(event) => updateEditor({ content: event.target.value })}
-              placeholder="Prompt content"
+              placeholder={t("prompts.editor.content_placeholder")}
               rows={6}
             />
           </label>
@@ -472,7 +480,7 @@ export function PromptPanel({
               onClick={() => setEditor(null)}
               disabled={isSaving}
             >
-              Cancel
+              {t("common.cancel")}
             </button>
             <button
               type="button"
@@ -480,7 +488,7 @@ export function PromptPanel({
               onClick={() => void handleSave()}
               disabled={isSaving}
             >
-              {editor.mode === "create" ? "Create" : "Save"}
+              {editor.mode === "create" ? t("common.create") : t("common.save")}
             </button>
           </div>
         </div>
@@ -490,21 +498,21 @@ export function PromptPanel({
         <input
           className="file-tree-search-input"
           type="search"
-          placeholder="Filter prompts"
+          placeholder={t("prompts.filter_placeholder")}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          aria-label="Filter prompts"
+          aria-label={t("prompts.filter_aria")}
         />
       </div>
       <div className="prompt-section">
         <div className="prompt-section-header">
-          <div className="prompt-section-title">Workspace prompts</div>
+          <div className="prompt-section-title">{t("prompts.section.workspace")}</div>
           <button
             type="button"
             className="ghost icon-button prompt-section-add"
             onClick={() => startCreate("workspace")}
-            aria-label="Add workspace prompt"
-            title="Add workspace prompt"
+            aria-label={t("prompts.add_workspace")}
+            title={t("prompts.add_workspace")}
           >
             <Plus aria-hidden />
           </button>
@@ -517,23 +525,25 @@ export function PromptPanel({
           <div className="prompt-empty-card">
             <ScrollText className="prompt-empty-icon" aria-hidden />
             <div className="prompt-empty-text">
-              <div className="prompt-empty-title">No workspace prompts yet</div>
+              <div className="prompt-empty-title">
+                {t("prompts.empty_workspace_title")}
+              </div>
               <div className="prompt-empty-subtitle">
-                Create one here or drop a .md file into the{" "}
+                {t("prompts.empty_workspace_prefix")}
                 {workspacePath ? (
                   <button
                     type="button"
                     className="prompt-empty-link"
                     onClick={() => void onRevealWorkspacePrompts()}
                   >
-                    workspace prompts folder
+                    {t("prompts.workspace_folder")}
                   </button>
                 ) : (
                   <span className="prompt-empty-link is-disabled">
-                    workspace prompts folder
+                    {t("prompts.workspace_folder")}
                   </span>
                 )}
-                .
+                {t("prompts.empty_workspace_suffix")}
               </div>
             </div>
           </div>
@@ -541,13 +551,13 @@ export function PromptPanel({
       </div>
       <div className="prompt-section">
         <div className="prompt-section-header">
-          <div className="prompt-section-title">General prompts</div>
+          <div className="prompt-section-title">{t("prompts.section.general")}</div>
           <button
             type="button"
             className="ghost icon-button prompt-section-add"
             onClick={() => startCreate("global")}
-            aria-label="Add general prompt"
-            title="Add general prompt"
+            aria-label={t("prompts.add_general")}
+            title={t("prompts.add_general")}
           >
             <Plus aria-hidden />
           </button>
@@ -560,17 +570,19 @@ export function PromptPanel({
           <div className="prompt-empty-card">
             <ScrollText className="prompt-empty-icon" aria-hidden />
             <div className="prompt-empty-text">
-              <div className="prompt-empty-title">No general prompts yet</div>
+              <div className="prompt-empty-title">
+                {t("prompts.empty_general_title")}
+              </div>
               <div className="prompt-empty-subtitle">
-                Create one here or drop a .md file into{" "}
+                {t("prompts.empty_general_prefix")}
                 <button
                   type="button"
                   className="prompt-empty-link"
                   onClick={() => void onRevealGeneralPrompts()}
                 >
-                  ~/.codex/prompts
+                  {t("prompts.general_folder")}
                 </button>
-                .
+                {t("prompts.empty_general_suffix")}
               </div>
             </div>
           </div>

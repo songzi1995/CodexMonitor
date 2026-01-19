@@ -15,7 +15,7 @@ export function SidebarHeader({ onSelectHome, onAddWorkspace }: SidebarHeaderPro
           className="subtitle subtitle-button"
           onClick={onSelectHome}
           data-tauri-drag-region="false"
-          aria-label="Open home"
+          aria-label={t("sidebar.open_home")}
         >
           <FolderKanban className="sidebar-nav-icon" />
           {t("app.tabs.projects")}
@@ -25,7 +25,7 @@ export function SidebarHeader({ onSelectHome, onAddWorkspace }: SidebarHeaderPro
         className="ghost workspace-add"
         onClick={onAddWorkspace}
         data-tauri-drag-region="false"
-        aria-label="Add workspace"
+        aria-label={t("sidebar.add_workspace")}
       >
         +
       </button>

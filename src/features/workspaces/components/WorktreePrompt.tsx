@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useI18n } from "../../../i18n";
 
 type WorktreePromptProps = {
   workspaceName: string;
@@ -19,6 +20,7 @@ export function WorktreePrompt({
   onConfirm,
   isBusy = false,
 }: WorktreePromptProps) {
+  const { t } = useI18n();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -30,12 +32,14 @@ export function WorktreePrompt({
     <div className="worktree-modal" role="dialog" aria-modal="true">
       <div className="worktree-modal-backdrop" onClick={onCancel} />
       <div className="worktree-modal-card">
-        <div className="worktree-modal-title">New worktree agent</div>
+        <div className="worktree-modal-title">
+          {t("workspaces.worktree_prompt.title")}
+        </div>
         <div className="worktree-modal-subtitle">
-          Create a worktree under "{workspaceName}".
+          {t("workspaces.worktree_prompt.subtitle", { name: workspaceName })}
         </div>
         <label className="worktree-modal-label" htmlFor="worktree-branch">
-          Branch name
+          {t("workspaces.worktree_prompt.branch_label")}
         </label>
         <input
           id="worktree-branch"
@@ -62,7 +66,7 @@ export function WorktreePrompt({
             type="button"
             disabled={isBusy}
           >
-            Cancel
+            {t("common.cancel")}
           </button>
           <button
             className="primary worktree-modal-button"
@@ -70,7 +74,7 @@ export function WorktreePrompt({
             type="button"
             disabled={isBusy || branch.trim().length === 0}
           >
-            Create
+            {t("common.create")}
           </button>
         </div>
       </div>

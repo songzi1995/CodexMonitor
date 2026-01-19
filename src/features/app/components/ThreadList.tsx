@@ -1,6 +1,7 @@
 import type { CSSProperties, MouseEvent } from "react";
 
 import type { ThreadSummary } from "../../../types";
+import { useI18n } from "../../../i18n";
 
 type ThreadStatusMap = Record<
   string,
@@ -56,6 +57,7 @@ export function ThreadList({
   onSelectThread,
   onShowThreadMenu,
 }: ThreadListProps) {
+  const { t } = useI18n();
   const indentUnit = nested ? 10 : 14;
   const renderThreadRow = ({ thread, depth }: ThreadRow) => {
     const relativeTime = getThreadTime(thread);
@@ -97,7 +99,11 @@ export function ThreadList({
         }}
       >
         <span className={`thread-status ${statusClass}`} aria-hidden />
-        {isPinned && <span className="thread-pin-icon" aria-label="Pinned">📌</span>}
+        {isPinned && (
+          <span className="thread-pin-icon" aria-label={t("threads.pinned")}>
+            📌
+          </span>
+        )}
         <span className="thread-name">{thread.name}</span>
         <div className="thread-meta">
           {relativeTime && <span className="thread-time">{relativeTime}</span>}
@@ -124,7 +130,7 @@ export function ThreadList({
             onToggleExpanded(workspaceId);
           }}
         >
-          {isExpanded ? "Show less" : "More..."}
+          {isExpanded ? t("threads.show_less") : t("threads.more")}
         </button>
       )}
       {isExpanded && nextCursor && (
@@ -136,7 +142,7 @@ export function ThreadList({
           }}
           disabled={isPaging}
         >
-          {isPaging ? "Loading..." : "Load older..."}
+          {isPaging ? t("common.loading") : t("threads.load_older")}
         </button>
       )}
     </div>

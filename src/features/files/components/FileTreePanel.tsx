@@ -19,6 +19,7 @@ import {
   Search,
 } from "lucide-react";
 import { PanelTabs, type PanelTabId } from "../../layout/components/PanelTabs";
+import { useI18n } from "../../../i18n";
 
 type FileTreeNode = {
   name: string;
@@ -181,6 +182,7 @@ export function FileTreePanel({
   filePanelMode,
   onFilePanelModeChange,
 }: FileTreePanelProps) {
+  const { t } = useI18n();
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
   const [query, setQuery] = useState("");
   const hasManualToggle = useRef(false);
@@ -271,7 +273,7 @@ export function FileTreePanel({
     const menu = await Menu.new({
       items: [
         await MenuItem.new({
-          text: "Reveal in Finder",
+          text: t("files.reveal_finder"),
           action: async () => {
             await revealItemInDir(resolvePath(relativePath));
           },
@@ -331,21 +333,35 @@ export function FileTreePanel({
         <PanelTabs active={filePanelMode} onSelect={onFilePanelModeChange} />
         <div className="file-tree-meta">
           <div className="file-tree-count">
-          {filteredFiles.length
-            ? normalizedQuery
-              ? `${filteredFiles.length} match${filteredFiles.length === 1 ? "" : "es"}`
-              : `${filteredFiles.length} file${filteredFiles.length === 1 ? "" : "s"}`
-            : showLoading
-              ? "Loading files"
-              : "No files"}
-        </div>
+            {filteredFiles.length
+              ? normalizedQuery
+                ? t("files.count_matches", {
+                    count: filteredFiles.length,
+                    suffix: filteredFiles.length === 1 ? "" : "es",
+                  })
+                : t("files.count_files", {
+                    count: filteredFiles.length,
+                    suffix: filteredFiles.length === 1 ? "" : "s",
+                  })
+              : showLoading
+                ? t("files.count_loading")
+                : t("files.count_none")}
+          </div>
           {hasFolders ? (
             <button
               type="button"
               className="ghost icon-button file-tree-toggle"
               onClick={toggleAllFolders}
-              aria-label={allVisibleExpanded ? "Collapse all folders" : "Expand all folders"}
-              title={allVisibleExpanded ? "Collapse all folders" : "Expand all folders"}
+              aria-label={
+                allVisibleExpanded
+                  ? t("files.toggle_collapse")
+                  : t("files.toggle_expand")
+              }
+              title={
+                allVisibleExpanded
+                  ? t("files.toggle_collapse")
+                  : t("files.toggle_expand")
+              }
             >
               <ChevronsUpDown aria-hidden />
             </button>
@@ -357,10 +373,10 @@ export function FileTreePanel({
         <input
           className="file-tree-search-input"
           type="search"
-          placeholder="Filter files and folders"
+          placeholder={t("files.filter_placeholder")}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          aria-label="Filter files and folders"
+          aria-label={t("files.filter_aria")}
         />
       </div>
       <div className="file-tree-list">
@@ -376,7 +392,7 @@ export function FileTreePanel({
           </div>
         ) : nodes.length === 0 ? (
           <div className="file-tree-empty">
-            {normalizedQuery ? "No matches found." : "No files available."}
+            {normalizedQuery ? t("files.empty_matches") : t("files.empty_files")}
           </div>
         ) : (
           nodes.map((node) => renderNode(node, 0))

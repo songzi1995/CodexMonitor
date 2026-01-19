@@ -1,5 +1,6 @@
 import type { MouseEvent, ReactNode } from "react";
 import { MainTopbar } from "../../app/components/MainTopbar";
+import { useI18n } from "../../../i18n";
 
 type DesktopLayoutProps = {
   sidebarNode: ReactNode;
@@ -44,6 +45,7 @@ export function DesktopLayout({
   onRightPanelResizeStart,
   onPlanPanelResizeStart,
 }: DesktopLayoutProps) {
+  const { t } = useI18n();
   return (
     <>
       {sidebarNode}
@@ -51,7 +53,7 @@ export function DesktopLayout({
         className="sidebar-resizer"
         role="separator"
         aria-orientation="vertical"
-        aria-label="Resize sidebar"
+        aria-label={t("layout.resize.sidebar")}
         onMouseDown={onSidebarResizeStart}
       />
 
@@ -71,7 +73,7 @@ export function DesktopLayout({
               className="right-panel-resizer"
               role="separator"
               aria-orientation="vertical"
-              aria-label="Resize right panel"
+              aria-label={t("layout.resize.right_panel")}
               onMouseDown={onRightPanelResizeStart}
             />
             <div className={`right-panel ${hasActivePlan ? "" : "plan-collapsed"}`}>
@@ -80,7 +82,7 @@ export function DesktopLayout({
                 className="right-panel-divider"
                 role="separator"
                 aria-orientation="horizontal"
-                aria-label="Resize plan panel"
+                aria-label={t("layout.resize.plan_panel")}
                 onMouseDown={onPlanPanelResizeStart}
               />
               <div className="right-panel-bottom">{planPanelNode}</div>

@@ -1,6 +1,7 @@
 import type { MouseEvent } from "react";
 
 import type { WorkspaceInfo } from "../../../types";
+import { useI18n } from "../../../i18n";
 
 type WorktreeCardProps = {
   worktree: WorkspaceInfo;
@@ -21,6 +22,7 @@ export function WorktreeCard({
   onConnectWorkspace,
   children,
 }: WorktreeCardProps) {
+  const { t } = useI18n();
   const worktreeCollapsed = worktree.settings.sidebarCollapsed;
   const worktreeBranch = worktree.worktree?.branch ?? "";
 
@@ -48,7 +50,11 @@ export function WorktreeCard({
               onToggleWorkspaceCollapse(worktree.id, !worktreeCollapsed);
             }}
             data-tauri-drag-region="false"
-            aria-label={worktreeCollapsed ? "Show agents" : "Hide agents"}
+            aria-label={
+              worktreeCollapsed
+                ? t("workspaces.show_agents")
+                : t("workspaces.hide_agents")
+            }
             aria-expanded={!worktreeCollapsed}
           >
             <span className="worktree-toggle-icon">›</span>
@@ -61,7 +67,7 @@ export function WorktreeCard({
                 onConnectWorkspace(worktree);
               }}
             >
-              connect
+              {t("workspaces.connect")}
             </span>
           )}
         </div>

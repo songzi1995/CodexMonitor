@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useI18n } from "../../../i18n";
 
 type RenameThreadPromptProps = {
   currentName: string;
@@ -15,6 +16,7 @@ export function RenameThreadPrompt({
   onCancel,
   onConfirm,
 }: RenameThreadPromptProps) {
+  const { t } = useI18n();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -26,12 +28,14 @@ export function RenameThreadPrompt({
     <div className="worktree-modal" role="dialog" aria-modal="true">
       <div className="worktree-modal-backdrop" onClick={onCancel} />
       <div className="worktree-modal-card">
-        <div className="worktree-modal-title">Rename thread</div>
+        <div className="worktree-modal-title">
+          {t("threads.rename.title")}
+        </div>
         <div className="worktree-modal-subtitle">
-          Current name: "{currentName}"
+          {t("threads.rename.current", { name: currentName })}
         </div>
         <label className="worktree-modal-label" htmlFor="thread-rename">
-          New name
+          {t("threads.rename.label")}
         </label>
         <input
           id="thread-rename"
@@ -56,7 +60,7 @@ export function RenameThreadPrompt({
             onClick={onCancel}
             type="button"
           >
-            Cancel
+            {t("common.cancel")}
           </button>
           <button
             className="primary worktree-modal-button"
@@ -64,7 +68,7 @@ export function RenameThreadPrompt({
             type="button"
             disabled={name.trim().length === 0}
           >
-            Rename
+            {t("threads.rename.action")}
           </button>
         </div>
       </div>

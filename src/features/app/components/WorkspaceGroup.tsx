@@ -1,3 +1,5 @@
+import { useI18n } from "../../../i18n";
+
 type WorkspaceGroupProps = {
   groupId: string | null;
   name: string;
@@ -15,6 +17,7 @@ export function WorkspaceGroup({
   onToggleCollapse,
   children,
 }: WorkspaceGroupProps) {
+  const { t } = useI18n();
   return (
     <div className="workspace-group">
       {showHeader && (
@@ -27,7 +30,11 @@ export function WorkspaceGroup({
                 event.stopPropagation();
                 onToggleCollapse(groupId);
               }}
-              aria-label={isCollapsed ? "Expand group" : "Collapse group"}
+              aria-label={
+                isCollapsed
+                  ? t("workspaces.expand_group")
+                  : t("workspaces.collapse_group")
+              }
               aria-expanded={!isCollapsed}
               type="button"
             >

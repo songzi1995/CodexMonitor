@@ -1,3 +1,5 @@
+import { useI18n } from "../../../i18n";
+
 type SidebarFooterProps = {
   sessionPercent: number | null;
   weeklyPercent: number | null;
@@ -15,13 +17,14 @@ export function SidebarFooter({
   creditsLabel,
   showWeekly,
 }: SidebarFooterProps) {
+  const { t } = useI18n();
   return (
     <div className="sidebar-footer">
       <div className="usage-bars">
         <div className="usage-block">
           <div className="usage-label">
             <span className="usage-title">
-              <span>Session</span>
+              <span>{t("usage.session")}</span>
               {sessionResetLabel && (
                 <span className="usage-reset">· {sessionResetLabel}</span>
               )}
@@ -41,7 +44,7 @@ export function SidebarFooter({
           <div className="usage-block">
             <div className="usage-label">
               <span className="usage-title">
-                <span>Weekly</span>
+                <span>{t("usage.weekly")}</span>
                 {weeklyResetLabel && (
                   <span className="usage-reset">· {weeklyResetLabel}</span>
                 )}

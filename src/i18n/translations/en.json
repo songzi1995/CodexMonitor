@@ -4,7 +4,10 @@
     "save": "Save",
     "cancel": "Cancel",
     "reset": "Reset",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "create": "Create",
+    "delete": "Delete",
+    "edit": "Edit"
   },
   "settings": {
     "language": {
@@ -310,6 +313,125 @@
     "prs": {
       "header": "GitHub pull requests",
       "open_count": "{{count}} open"
+    }
+  },
+  "layout": {
+    "resize": {
+      "sidebar": "Resize sidebar",
+      "right_panel": "Resize right panel",
+      "plan_panel": "Resize plan panel",
+      "projects": "Resize projects"
+    },
+    "toggle": {
+      "hide_threads": "Hide threads sidebar",
+      "show_threads": "Show threads sidebar",
+      "hide_git": "Hide git sidebar",
+      "show_git": "Show git sidebar"
+    }
+  },
+  "plan": {
+    "title": "Plan",
+    "empty_waiting": "Waiting on a plan...",
+    "empty": "No active plan."
+  },
+  "sidebar": {
+    "empty": "Add a workspace to start.",
+    "open_home": "Open home",
+    "add_workspace": "Add workspace",
+    "open_settings": "Open settings",
+    "settings": "Settings",
+    "open_debug": "Open debug log",
+    "debug_log": "Debug log"
+  },
+  "threads": {
+    "pinned": "Pinned",
+    "show_less": "Show less",
+    "more": "More...",
+    "load_older": "Load older...",
+    "loading_agents": "Loading agents",
+    "rename": {
+      "title": "Rename thread",
+      "current": "Current name: \"{{name}}\"",
+      "label": "New name",
+      "action": "Rename"
+    }
+  },
+  "workspaces": {
+    "connect": "connect",
+    "add_agent_options": "Add agent options",
+    "show_agents": "Show agents",
+    "hide_agents": "Hide agents",
+    "worktrees": "Worktrees",
+    "expand_group": "Expand group",
+    "collapse_group": "Collapse group",
+    "new_agent": "New agent",
+    "new_worktree_agent": "New worktree agent",
+    "worktree_prompt": {
+      "title": "New worktree agent",
+      "subtitle": "Create a worktree under \"{{name}}\".",
+      "branch_label": "Branch name"
+    }
+  },
+  "usage": {
+    "session": "Session",
+    "weekly": "Weekly"
+  },
+  "files": {
+    "count_matches": "{{count}} match{{suffix}}",
+    "count_files": "{{count}} file{{suffix}}",
+    "count_none": "No files",
+    "count_loading": "Loading files",
+    "toggle_expand": "Expand all folders",
+    "toggle_collapse": "Collapse all folders",
+    "filter_placeholder": "Filter files and folders",
+    "filter_aria": "Filter files and folders",
+    "empty_matches": "No matches found.",
+    "empty_files": "No files available.",
+    "reveal_finder": "Reveal in Finder"
+  },
+  "prompts": {
+    "count": "{{count}} prompt{{suffix}}",
+    "none": "No prompts",
+    "filter_placeholder": "Filter prompts",
+    "filter_aria": "Filter prompts",
+    "section": {
+      "workspace": "Workspace prompts",
+      "general": "General prompts"
+    },
+    "add_workspace": "Add workspace prompt",
+    "add_general": "Add general prompt",
+    "empty_workspace_title": "No workspace prompts yet",
+    "empty_workspace_prefix": "Create one here or drop a .md file into the ",
+    "empty_workspace_suffix": ".",
+    "empty_general_title": "No general prompts yet",
+    "empty_general_prefix": "Create one here or drop a .md file into ",
+    "empty_general_suffix": ".",
+    "workspace_folder": "workspace prompts folder",
+    "general_folder": "~/.codex/prompts",
+    "args_placeholder": "Arguments",
+    "args_aria": "Arguments for {{name}}",
+    "send": "Send",
+    "send_new": "New agent",
+    "send_current_title": "Send to current agent",
+    "send_new_title": "Send to a new agent",
+    "actions_label": "Prompt actions",
+    "delete_confirm": "Delete this prompt?",
+    "move_to_workspace": "Move to workspace",
+    "move_to_general": "Move to general",
+    "editor": {
+      "name": "Name",
+      "name_placeholder": "Prompt name",
+      "scope": "Scope",
+      "scope_workspace": "Workspace",
+      "scope_general": "General",
+      "description": "Description",
+      "description_placeholder": "Optional description",
+      "argument_hint": "Argument hint",
+      "argument_hint_placeholder": "Optional argument hint",
+      "content": "Content",
+      "content_placeholder": "Prompt content",
+      "error_name_required": "Name is required.",
+      "error_name_whitespace": "Name cannot include whitespace."
     }
   }
 }

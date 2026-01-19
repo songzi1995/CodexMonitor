@@ -5,6 +5,7 @@ import type { ThreadSummary, WorkspaceInfo } from "../../../types";
 import { ThreadList } from "./ThreadList";
 import { ThreadLoading } from "./ThreadLoading";
 import { WorktreeCard } from "./WorktreeCard";
+import { useI18n } from "../../../i18n";
 
 type ThreadStatusMap = Record<
   string,
@@ -75,6 +76,7 @@ export function WorktreeSection({
   onToggleExpanded,
   onLoadOlderThreads,
 }: WorktreeSectionProps) {
+  const { t } = useI18n();
   if (!worktrees.length) {
     return null;
   }
@@ -83,7 +85,7 @@ export function WorktreeSection({
     <div className="worktree-section">
       <div className="worktree-header">
         <Layers className="worktree-header-icon" aria-hidden />
-        Worktrees
+        {t("workspaces.worktrees")}
       </div>
       <div className="worktree-list">
         {worktrees.map((worktree) => {

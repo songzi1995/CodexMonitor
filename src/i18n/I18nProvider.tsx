@@ -4,7 +4,10 @@ import en from "./translations/en.json";
 import zhCN from "./translations/zh-CN.json";
 
 export type Locale = "en" | "zh-CN";
-type MessageValue = string | Record<string, MessageValue>;
+interface MessageMap {
+  [key: string]: MessageValue;
+}
+type MessageValue = string | MessageMap;
 type Messages = Record<string, MessageValue>;
 type MessageParams = Record<string, string | number>;
 
