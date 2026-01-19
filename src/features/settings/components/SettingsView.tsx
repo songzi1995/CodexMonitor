@@ -1077,24 +1077,24 @@ export function SettingsView({
             )}
             {activeSection === "codex" && (
               <section className="settings-section">
-                <div className="settings-section-title">Codex</div>
+                <div className="settings-section-title">{t("settings.codex.title")}</div>
                 <div className="settings-section-subtitle">
-                  Configure the Codex CLI used by CodexMonitor and validate the install.
+                  {t("settings.codex.subtitle")}
                 </div>
                 <div className="settings-field">
                   <label className="settings-field-label" htmlFor="codex-path">
-                    Default Codex path
+                    {t("settings.codex.path")}
                   </label>
                   <div className="settings-field-row">
                     <input
                       id="codex-path"
                       className="settings-input"
                       value={codexPathDraft}
-                      placeholder="codex"
+                      placeholder={t("settings.codex.path_placeholder")}
                       onChange={(event) => setCodexPathDraft(event.target.value)}
                     />
                     <button type="button" className="ghost" onClick={handleBrowseCodex}>
-                      Browse
+                      {t("settings.codex.browse")}
                     </button>
                     <button
                       type="button"
@@ -1115,7 +1115,9 @@ export function SettingsView({
                       onClick={handleSaveCodexSettings}
                       disabled={isSavingSettings}
                     >
-                      {isSavingSettings ? "Saving..." : "Save"}
+                      {isSavingSettings
+                        ? t("settings.codex.saving")
+                        : t("settings.codex.save")}
                     </button>
                   )}
                   <button
@@ -1125,7 +1127,9 @@ export function SettingsView({
                     disabled={doctorState.status === "running"}
                   >
                     <Stethoscope aria-hidden />
-                    {doctorState.status === "running" ? "Running..." : "Run doctor"}
+                    {doctorState.status === "running"
+                      ? t("settings.codex.running")
+                      : t("settings.codex.run_doctor")}
                   </button>
                 </div>
 
@@ -1134,20 +1138,27 @@ export function SettingsView({
                     className={`settings-doctor ${doctorState.result.ok ? "ok" : "error"}`}
                   >
                     <div className="settings-doctor-title">
-                      {doctorState.result.ok ? "Codex looks good" : "Codex issue detected"}
+                      {doctorState.result.ok
+                        ? t("settings.codex.doctor_ok")
+                        : t("settings.codex.doctor_error")}
                     </div>
                     <div className="settings-doctor-body">
                       <div>
-                        Version: {doctorState.result.version ?? "unknown"}
+                        {t("settings.codex.doctor_version", {
+                          version: doctorState.result.version ?? "unknown",
+                        })}
                       </div>
                       <div>
-                        App-server: {doctorState.result.appServerOk ? "ok" : "failed"}
+                        {t("settings.codex.doctor_app_server", {
+                          status: doctorState.result.appServerOk ? "ok" : "failed",
+                        })}
                       </div>
                       <div>
-                        Node:{" "}
-                        {doctorState.result.nodeOk
-                          ? `ok (${doctorState.result.nodeVersion ?? "unknown"})`
-                          : "missing"}
+                        {t("settings.codex.doctor_node", {
+                          status: doctorState.result.nodeOk
+                            ? `ok (${doctorState.result.nodeVersion ?? "unknown"})`
+                            : "missing",
+                        })}
                       </div>
                       {doctorState.result.details && (
                         <div>{doctorState.result.details}</div>
@@ -1167,7 +1178,7 @@ export function SettingsView({
 
                 <div className="settings-field">
                   <label className="settings-field-label" htmlFor="default-access">
-                    Default access mode
+                    {t("settings.codex.access_mode")}
                   </label>
                   <select
                     id="default-access"
@@ -1180,15 +1191,21 @@ export function SettingsView({
                       })
                     }
                   >
-                    <option value="read-only">Read only</option>
-                    <option value="current">On-request</option>
-                    <option value="full-access">Full access</option>
+                    <option value="read-only">
+                      {t("settings.codex.access_mode_options.read-only")}
+                    </option>
+                    <option value="current">
+                      {t("settings.codex.access_mode_options.current")}
+                    </option>
+                    <option value="full-access">
+                      {t("settings.codex.access_mode_options.full-access")}
+                    </option>
                   </select>
                 </div>
 
                 <div className="settings-field">
                   <label className="settings-field-label" htmlFor="backend-mode">
-                    Backend mode
+                    {t("settings.codex.backend_mode")}
                   </label>
                   <select
                     id="backend-mode"
@@ -1201,8 +1218,12 @@ export function SettingsView({
                       })
                     }
                   >
-                    <option value="local">Local (default)</option>
-                    <option value="remote">Remote (daemon)</option>
+                    <option value="local">
+                      {t("settings.codex.backend_mode_options.local")}
+                    </option>
+                    <option value="remote">
+                      {t("settings.codex.backend_mode_options.remote")}
+                    </option>
                   </select>
                   <div className="settings-help">
                     Remote mode connects to a separate daemon running the backend on another machine (e.g. WSL2/Linux).
@@ -1211,7 +1232,9 @@ export function SettingsView({
 
                 {appSettings.backendMode === "remote" && (
                   <div className="settings-field">
-                    <div className="settings-field-label">Remote backend</div>
+                    <div className="settings-field-label">
+                      {t("settings.codex.remote_backend")}
+                    </div>
                     <div className="settings-field-row">
                       <input
                         className="settings-input settings-input--compact"
@@ -1227,13 +1250,13 @@ export function SettingsView({
                             void handleCommitRemoteHost();
                           }
                         }}
-                        aria-label="Remote backend host"
+                        aria-label={t("settings.codex.remote_host_aria")}
                       />
                       <input
                         type="password"
                         className="settings-input settings-input--compact"
                         value={remoteTokenDraft}
-                        placeholder="Token (optional)"
+                        placeholder={t("settings.codex.remote_token_placeholder")}
                         onChange={(event) => setRemoteTokenDraft(event.target.value)}
                         onBlur={() => {
                           void handleCommitRemoteToken();
@@ -1244,7 +1267,7 @@ export function SettingsView({
                             void handleCommitRemoteToken();
                           }
                         }}
-                        aria-label="Remote backend token"
+                        aria-label={t("settings.codex.remote_token_aria")}
                       />
                     </div>
                     <div className="settings-help">
@@ -1254,7 +1277,9 @@ export function SettingsView({
                 )}
 
                 <div className="settings-field">
-                  <div className="settings-field-label">Workspace overrides</div>
+                  <div className="settings-field-label">
+                    {t("settings.codex.workspace_overrides")}
+                  </div>
                   <div className="settings-overrides">
                     {projects.map((workspace) => (
                       <div key={workspace.id} className="settings-override-row">
@@ -1266,7 +1291,7 @@ export function SettingsView({
                           <input
                             className="settings-input settings-input--compact"
                             value={overrideDrafts[workspace.id] ?? ""}
-                            placeholder="Use default"
+                            placeholder={t("settings.codex.override_placeholder")}
                             onChange={(event) =>
                               setOverrideDrafts((prev) => ({
                                 ...prev,
@@ -1299,7 +1324,9 @@ export function SettingsView({
                       </div>
                     ))}
                     {projects.length === 0 && (
-                      <div className="settings-empty">No projects yet.</div>
+                      <div className="settings-empty">
+                        {t("settings.codex.overrides_empty")}
+                      </div>
                     )}
                   </div>
                 </div>
@@ -1308,15 +1335,19 @@ export function SettingsView({
             )}
             {activeSection === "experimental" && (
               <section className="settings-section">
-                <div className="settings-section-title">Experimental</div>
+                <div className="settings-section-title">
+                  {t("settings.experimental.title")}
+                </div>
                 <div className="settings-section-subtitle">
-                  Preview features that may change or be removed.
+                  {t("settings.experimental.subtitle")}
                 </div>
                 <div className="settings-toggle-row">
                   <div>
-                    <div className="settings-toggle-title">Collab mode</div>
+                    <div className="settings-toggle-title">
+                      {t("settings.experimental.collab.title")}
+                    </div>
                     <div className="settings-toggle-subtitle">
-                      Enable multi-agent collaboration tools in Codex.
+                      {t("settings.experimental.collab.subtitle")}
                     </div>
                   </div>
                   <button
@@ -1335,9 +1366,11 @@ export function SettingsView({
                 </div>
                 <div className="settings-toggle-row">
                   <div>
-                    <div className="settings-toggle-title">Background terminal</div>
+                    <div className="settings-toggle-title">
+                      {t("settings.experimental.unified_exec.title")}
+                    </div>
                     <div className="settings-toggle-subtitle">
-                      Run long-running terminal commands in the background.
+                      {t("settings.experimental.unified_exec.subtitle")}
                     </div>
                   </div>
                   <button
@@ -1356,9 +1389,11 @@ export function SettingsView({
                 </div>
                 <div className="settings-toggle-row">
                   <div>
-                    <div className="settings-toggle-title">Steer mode</div>
+                    <div className="settings-toggle-title">
+                      {t("settings.experimental.steer.title")}
+                    </div>
                     <div className="settings-toggle-subtitle">
-                      Send messages immediately. Use Tab to queue while a run is active.
+                      {t("settings.experimental.steer.subtitle")}
                     </div>
                   </div>
                   <button

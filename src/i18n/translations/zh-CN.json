@@ -116,6 +116,56 @@
       "shortcut_help_simple": "默认：{{shortcut}}",
       "input_placeholder": "输入快捷键",
       "clear": "清除"
+    },
+    "codex": {
+      "title": "Codex",
+      "subtitle": "配置 Codex 可执行文件与默认访问模式。",
+      "path": "Codex 路径",
+      "path_placeholder": "codex",
+      "browse": "浏览",
+      "save": "保存",
+      "saving": "保存中...",
+      "run_doctor": "运行诊断",
+      "running": "运行中...",
+      "doctor_ok": "Codex 状态正常",
+      "doctor_error": "检测到 Codex 问题",
+      "doctor_version": "版本：{{version}}",
+      "doctor_app_server": "App-server：{{status}}",
+      "doctor_node": "Node：{{status}}",
+      "access_mode": "默认访问模式",
+      "access_mode_options": {
+        "read-only": "只读",
+        "current": "按需授权",
+        "full-access": "完全访问"
+      },
+      "backend_mode": "后端模式",
+      "backend_mode_options": {
+        "local": "本地（默认）",
+        "remote": "远程（守护进程）"
+      },
+      "remote_backend": "远程后端",
+      "remote_host_aria": "远程后端地址",
+      "remote_token_aria": "远程后端令牌",
+      "remote_token_placeholder": "令牌（可选）",
+      "workspace_overrides": "工作区覆盖设置",
+      "override_placeholder": "使用默认值",
+      "overrides_empty": "暂无项目。"
+    },
+    "experimental": {
+      "title": "实验性功能",
+      "subtitle": "尝试尚未完全支持的特性。",
+      "collab": {
+        "title": "协作模式",
+        "subtitle": "允许在共享工作区中进行协作。"
+      },
+      "unified_exec": {
+        "title": "后台终端",
+        "subtitle": "让终端会话在后台保持运行。"
+      },
+      "steer": {
+        "title": "引导模式",
+        "subtitle": "启用更丰富的引导能力。"
+      }
     }
   }
 }

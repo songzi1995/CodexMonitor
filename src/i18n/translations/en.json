@@ -116,6 +116,56 @@
       "shortcut_help_simple": "Default: {{shortcut}}",
       "input_placeholder": "Type shortcut",
       "clear": "Clear"
+    },
+    "codex": {
+      "title": "Codex",
+      "subtitle": "Configure your Codex binary and default access mode.",
+      "path": "Codex path",
+      "path_placeholder": "codex",
+      "browse": "Browse",
+      "save": "Save",
+      "saving": "Saving...",
+      "run_doctor": "Run doctor",
+      "running": "Running...",
+      "doctor_ok": "Codex looks good",
+      "doctor_error": "Codex issue detected",
+      "doctor_version": "Version: {{version}}",
+      "doctor_app_server": "App-server: {{status}}",
+      "doctor_node": "Node: {{status}}",
+      "access_mode": "Default access mode",
+      "access_mode_options": {
+        "read-only": "Read only",
+        "current": "On-request",
+        "full-access": "Full access"
+      },
+      "backend_mode": "Backend mode",
+      "backend_mode_options": {
+        "local": "Local (default)",
+        "remote": "Remote (daemon)"
+      },
+      "remote_backend": "Remote backend",
+      "remote_host_aria": "Remote backend host",
+      "remote_token_aria": "Remote backend token",
+      "remote_token_placeholder": "Token (optional)",
+      "workspace_overrides": "Workspace overrides",
+      "override_placeholder": "Use default",
+      "overrides_empty": "No projects yet."
+    },
+    "experimental": {
+      "title": "Experimental",
+      "subtitle": "Try early features before they are fully supported.",
+      "collab": {
+        "title": "Collab mode",
+        "subtitle": "Allow agent collaboration in shared workspaces."
+      },
+      "unified_exec": {
+        "title": "Background terminal",
+        "subtitle": "Keep terminal sessions alive in the background."
+      },
+      "steer": {
+        "title": "Steer mode",
+        "subtitle": "Enable steer mode for richer guidance."
+      }
     }
   }
 }
