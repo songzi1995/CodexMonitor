@@ -1,0 +1,9 @@
+{
+  "common": {
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "reset": "Reset",
+    "loading": "Loading..."
+  }
+}

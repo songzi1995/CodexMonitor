@@ -10,6 +10,7 @@
     "doctor": "sh scripts/doctor.sh",
     "doctor:strict": "sh scripts/doctor.sh --strict",
     "lint": "eslint . --ext .ts,.tsx",
+    "test:i18n": "node scripts/check-i18n-keys.mjs",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
     "tauri": "tauri",
