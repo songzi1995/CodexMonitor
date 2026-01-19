@@ -5,5 +5,14 @@
     "cancel": "取消",
     "reset": "重置",
     "loading": "加载中..."
+  },
+  "settings": {
+    "language": {
+      "label": "语言",
+      "option": {
+        "en": "English",
+        "zh": "简体中文"
+      }
+    }
   }
 }

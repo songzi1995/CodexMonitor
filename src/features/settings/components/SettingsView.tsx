@@ -20,6 +20,8 @@ import type {
   WorkspaceGroup,
   WorkspaceInfo,
 } from "../../../types";
+import { useI18n } from "../../../i18n";
+import type { Locale } from "../../../i18n";
 import { formatDownloadSize } from "../../../utils/formatting";
 import { buildShortcutValue, formatShortcut } from "../../../utils/shortcuts";
 import { clampUiScale } from "../../../utils/uiScale";
@@ -118,6 +120,7 @@ export function SettingsView({
     access: appSettings.composerAccessShortcut ?? "",
     reasoning: appSettings.composerReasoningShortcut ?? "",
   });
+  const { t, locale, setLocale } = useI18n();
   const dictationReady = dictationModelStatus?.state === "ready";
   const dictationProgress = dictationModelStatus?.progress ?? null;
   const selectedDictationModel = useMemo(() => {
@@ -665,6 +668,20 @@ export function SettingsView({
                   >
                     <span className="settings-toggle-knob" />
                   </button>
+                </div>
+                <div className="settings-field">
+                  <label className="settings-field-label" htmlFor="ui-language">
+                    {t("settings.language.label")}
+                  </label>
+                  <select
+                    id="ui-language"
+                    className="settings-select"
+                    value={locale}
+                    onChange={(event) => setLocale(event.target.value as Locale)}
+                  >
+                    <option value="en">{t("settings.language.option.en")}</option>
+                    <option value="zh-CN">{t("settings.language.option.zh")}</option>
+                  </select>
                 </div>
                 <div className="settings-toggle-row settings-scale-row">
                   <div>

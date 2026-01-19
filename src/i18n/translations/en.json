@@ -5,5 +5,14 @@
     "cancel": "Cancel",
     "reset": "Reset",
     "loading": "Loading..."
+  },
+  "settings": {
+    "language": {
+      "label": "Language",
+      "option": {
+        "en": "English",
+        "zh": "Chinese (Simplified)"
+      }
+    }
   }
 }
