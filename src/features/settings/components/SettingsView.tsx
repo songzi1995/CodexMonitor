@@ -421,7 +421,7 @@ export function SettingsView({
               onClick={() => setActiveSection("projects")}
             >
               <LayoutGrid aria-hidden />
-              Projects
+              {t("settings.nav.projects")}
             </button>
             <button
               type="button"
@@ -429,7 +429,7 @@ export function SettingsView({
               onClick={() => setActiveSection("display")}
             >
               <SlidersHorizontal aria-hidden />
-              Display &amp; Sound
+              {t("settings.nav.display")}
             </button>
             <button
               type="button"
@@ -437,7 +437,7 @@ export function SettingsView({
               onClick={() => setActiveSection("dictation")}
             >
               <Mic aria-hidden />
-              Dictation
+              {t("settings.nav.dictation")}
             </button>
             <button
               type="button"
@@ -445,7 +445,7 @@ export function SettingsView({
               onClick={() => setActiveSection("shortcuts")}
             >
               <Keyboard aria-hidden />
-              Shortcuts
+              {t("settings.nav.shortcuts")}
             </button>
             <button
               type="button"
@@ -453,7 +453,7 @@ export function SettingsView({
               onClick={() => setActiveSection("codex")}
             >
               <TerminalSquare aria-hidden />
-              Codex
+              {t("settings.nav.codex")}
             </button>
             <button
               type="button"
@@ -461,15 +461,15 @@ export function SettingsView({
               onClick={() => setActiveSection("experimental")}
             >
               <FlaskConical aria-hidden />
-              Experimental
+              {t("settings.nav.experimental")}
             </button>
           </aside>
           <div className="settings-content">
             {activeSection === "projects" && (
               <section className="settings-section">
-                <div className="settings-section-title">Projects</div>
+                <div className="settings-section-title">{t("settings.projects.title")}</div>
                 <div className="settings-section-subtitle">
-                  Group related workspaces and reorder projects within each group.
+                  {t("settings.projects.subtitle")}
                 </div>
                 <div className="settings-subsection-title">Groups</div>
                 <div className="settings-subsection-subtitle">
@@ -627,7 +627,7 @@ export function SettingsView({
                                 type="button"
                                 className="ghost icon-button"
                                 onClick={() => onDeleteWorkspace(workspace.id)}
-                                aria-label="Delete project"
+                                aria-label={t("settings.projects.delete")}
                               >
                                 <Trash2 aria-hidden />
                               </button>
@@ -638,26 +638,30 @@ export function SettingsView({
                     </div>
                   ))}
                   {projects.length === 0 && (
-                    <div className="settings-empty">No projects yet.</div>
+                    <div className="settings-empty">{t("settings.projects.empty")}</div>
                   )}
                 </div>
               </section>
             )}
             {activeSection === "display" && (
               <section className="settings-section">
-                <div className="settings-section-title">Display &amp; Sound</div>
+                <div className="settings-section-title">{t("settings.display.title")}</div>
                 <div className="settings-section-subtitle">
-                  Tune visuals and audio alerts to your preferences.
+                  {t("settings.display.subtitle")}
                 </div>
-                <div className="settings-subsection-title">Display</div>
+                <div className="settings-subsection-title">
+                  {t("settings.display.section.display")}
+                </div>
                 <div className="settings-subsection-subtitle">
-                  Adjust how the window renders backgrounds and effects.
+                  {t("settings.display.section.display_subtitle")}
                 </div>
                 <div className="settings-toggle-row">
                   <div>
-                    <div className="settings-toggle-title">Reduce transparency</div>
+                    <div className="settings-toggle-title">
+                      {t("settings.display.reduce_transparency.title")}
+                    </div>
                     <div className="settings-toggle-subtitle">
-                      Use solid surfaces instead of glass.
+                      {t("settings.display.reduce_transparency.subtitle")}
                     </div>
                   </div>
                   <button
@@ -685,7 +689,9 @@ export function SettingsView({
                 </div>
                 <div className="settings-toggle-row settings-scale-row">
                   <div>
-                    <div className="settings-toggle-title">Interface scale</div>
+                    <div className="settings-toggle-title">
+                      {t("settings.display.interface_scale.title")}
+                    </div>
                     <div
                       className="settings-toggle-subtitle"
                       title={scaleShortcutTitle}
@@ -700,7 +706,7 @@ export function SettingsView({
                       inputMode="decimal"
                       className="settings-input settings-input--scale"
                       value={scaleDraft}
-                      aria-label="Interface scale"
+                      aria-label={t("settings.display.interface_scale.aria")}
                       onChange={(event) => setScaleDraft(event.target.value)}
                       onBlur={() => {
                         void handleCommitScale();
@@ -719,19 +725,23 @@ export function SettingsView({
                         void handleResetScale();
                       }}
                     >
-                      Reset
+                      {t("settings.display.interface_scale.reset")}
                     </button>
                   </div>
                 </div>
-                <div className="settings-subsection-title">Sounds</div>
+                <div className="settings-subsection-title">
+                  {t("settings.display.section.sounds")}
+                </div>
                 <div className="settings-subsection-subtitle">
-                  Control notification audio alerts.
+                  {t("settings.display.section.sounds_subtitle")}
                 </div>
                 <div className="settings-toggle-row">
                   <div>
-                    <div className="settings-toggle-title">Notification sounds</div>
+                    <div className="settings-toggle-title">
+                      {t("settings.display.notification_sounds.title")}
+                    </div>
                     <div className="settings-toggle-subtitle">
-                      Play a sound when a long-running agent finishes while the window is unfocused.
+                      {t("settings.display.notification_sounds.subtitle")}
                     </div>
                   </div>
                   <button
@@ -754,7 +764,7 @@ export function SettingsView({
                     className="ghost settings-button-compact"
                     onClick={onTestNotificationSound}
                   >
-                    Test sound
+                    {t("settings.display.notification_sounds.test")}
                   </button>
                 </div>
               </section>

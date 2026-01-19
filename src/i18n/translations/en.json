@@ -13,6 +13,44 @@
         "en": "English",
         "zh": "Chinese (Simplified)"
       }
+    },
+    "nav": {
+      "projects": "Projects",
+      "display": "Display",
+      "dictation": "Dictation",
+      "shortcuts": "Shortcuts",
+      "codex": "Codex",
+      "experimental": "Experimental"
+    },
+    "projects": {
+      "title": "Projects",
+      "subtitle": "Organize your workspaces into groups and set per-project defaults.",
+      "empty": "No projects yet.",
+      "delete": "Delete project"
+    },
+    "display": {
+      "title": "Display & Sound",
+      "subtitle": "Tune visuals and audio alerts to your preferences.",
+      "section": {
+        "display": "Display",
+        "display_subtitle": "Adjust how the window renders backgrounds and effects.",
+        "sounds": "Sounds",
+        "sounds_subtitle": "Control notification audio alerts."
+      },
+      "reduce_transparency": {
+        "title": "Reduce transparency",
+        "subtitle": "Use solid surfaces instead of glass."
+      },
+      "interface_scale": {
+        "title": "Interface scale",
+        "aria": "Interface scale",
+        "reset": "Reset"
+      },
+      "notification_sounds": {
+        "title": "Notification sounds",
+        "subtitle": "Play a sound when a long-running agent finishes while the window is unfocused.",
+        "test": "Test sound"
+      }
     }
   }
 }
