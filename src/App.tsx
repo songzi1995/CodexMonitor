@@ -88,6 +88,7 @@ import { playNotificationSound } from "./utils/notificationSounds";
 import {
   pickWorkspacePath,
 } from "./services/tauri";
+import { useI18n } from "./i18n";
 import type {
   AccessMode,
   GitHubPullRequest,
@@ -103,6 +104,7 @@ function MainApp() {
     doctor,
     isLoading: appSettingsLoading
   } = useAppSettings();
+  const { t } = useI18n();
   const dictationModel = useDictationModel(appSettings.dictationModelId);
   const {
     state: dictationState,
@@ -511,12 +513,15 @@ function MainApp() {
   }, [activeWorkspace, handleSetGitRoot, normalizePath]);
   const fileStatus =
     gitStatus.error
-      ? "Git status unavailable"
+      ? t("app.git_status.unavailable")
       : gitStatus.files.length > 0
-        ? `${gitStatus.files.length} file${
-            gitStatus.files.length === 1 ? "" : "s"
-          } changed`
-        : "Working tree clean";
+        ? t(
+            gitStatus.files.length === 1
+              ? "app.git_status.changes_single"
+              : "app.git_status.changes_plural",
+            { count: gitStatus.files.length },
+          )
+        : t("app.git_status.clean");
 
   const activeDiffs = diffSource === "pr" ? gitPullRequestDiffs : gitDiffs;
   const activeDiffLoading =
@@ -1269,10 +1274,10 @@ function MainApp() {
     tabletNavTab: tabletTab,
     gitPanelMode,
     onGitPanelModeChange: handleGitPanelModeChange,
-    worktreeApplyLabel: "apply",
+    worktreeApplyLabel: t("app.worktree.apply"),
     worktreeApplyTitle: activeParentWorkspace?.name
-      ? `Apply changes to ${activeParentWorkspace.name}`
-      : "Apply changes to parent workspace",
+      ? t("app.worktree.apply_named", { name: activeParentWorkspace.name })
+      : t("app.worktree.apply_help"),
     worktreeApplyLoading: isWorktreeWorkspace ? worktreeApplyLoading : false,
     worktreeApplyError: isWorktreeWorkspace ? worktreeApplyError : null,
     worktreeApplySuccess: isWorktreeWorkspace ? worktreeApplySuccess : false,

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Folder, GitBranch, ScrollText } from "lucide-react";
+import { useI18n } from "../../../i18n";
 
 export type PanelTabId = "git" | "files" | "prompts";
 
@@ -15,16 +16,18 @@ type PanelTabsProps = {
   tabs?: PanelTab[];
 };
 
-const defaultTabs: PanelTab[] = [
-  { id: "git", label: "Git", icon: <GitBranch aria-hidden /> },
-  { id: "files", label: "Files", icon: <Folder aria-hidden /> },
-  { id: "prompts", label: "Prompts", icon: <ScrollText aria-hidden /> },
-];
-
-export function PanelTabs({ active, onSelect, tabs = defaultTabs }: PanelTabsProps) {
+export function PanelTabs({ active, onSelect, tabs }: PanelTabsProps) {
+  const { t } = useI18n();
+  const resolvedTabs =
+    tabs ??
+    ([
+      { id: "git", label: t("app.tabs.git"), icon: <GitBranch aria-hidden /> },
+      { id: "files", label: t("app.tabs.files"), icon: <Folder aria-hidden /> },
+      { id: "prompts", label: t("app.tabs.prompts"), icon: <ScrollText aria-hidden /> },
+    ] as PanelTab[]);
   return (
     <div className="panel-tabs" role="tablist" aria-label="Panel">
-      {tabs.map((tab) => {
+      {resolvedTabs.map((tab) => {
         const isActive = active === tab.id;
         return (
           <button

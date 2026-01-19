@@ -167,5 +167,29 @@
         "subtitle": "Enable steer mode for richer guidance."
       }
     }
+  },
+  "app": {
+    "tabs": {
+      "projects": "Projects",
+      "codex": "Codex",
+      "git": "Git",
+      "files": "Files",
+      "prompts": "Prompts",
+      "log": "Log"
+    },
+    "git_status": {
+      "unavailable": "Git status unavailable",
+      "clean": "Working tree clean",
+      "changes_single": "{{count}} change",
+      "changes_plural": "{{count}} changes"
+    },
+    "worktree": {
+      "apply": "Apply",
+      "apply_help": "Apply changes to parent workspace",
+      "apply_named": "Apply changes to {{name}}"
+    },
+    "actions": {
+      "go_projects": "Go to projects"
+    }
   }
 }

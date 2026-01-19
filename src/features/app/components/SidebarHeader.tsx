@@ -1,4 +1,5 @@
 import { FolderKanban } from "lucide-react";
+import { useI18n } from "../../../i18n";
 
 type SidebarHeaderProps = {
   onSelectHome: () => void;
@@ -6,6 +7,7 @@ type SidebarHeaderProps = {
 };
 
 export function SidebarHeader({ onSelectHome, onAddWorkspace }: SidebarHeaderProps) {
+  const { t } = useI18n();
   return (
     <div className="sidebar-header">
       <div>
@@ -16,7 +18,7 @@ export function SidebarHeader({ onSelectHome, onAddWorkspace }: SidebarHeaderPro
           aria-label="Open home"
         >
           <FolderKanban className="sidebar-nav-icon" />
-          Projects
+          {t("app.tabs.projects")}
         </button>
       </div>
       <button

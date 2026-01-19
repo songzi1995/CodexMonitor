@@ -167,5 +167,29 @@
         "subtitle": "启用更丰富的引导能力。"
       }
     }
+  },
+  "app": {
+    "tabs": {
+      "projects": "项目",
+      "codex": "Codex",
+      "git": "Git",
+      "files": "文件",
+      "prompts": "提示词",
+      "log": "日志"
+    },
+    "git_status": {
+      "unavailable": "无法获取 Git 状态",
+      "clean": "工作区干净",
+      "changes_single": "{{count}} 个改动",
+      "changes_plural": "{{count}} 个改动"
+    },
+    "worktree": {
+      "apply": "应用",
+      "apply_help": "将改动应用到父工作区",
+      "apply_named": "将改动应用到 {{name}}"
+    },
+    "actions": {
+      "go_projects": "返回项目"
+    }
   }
 }

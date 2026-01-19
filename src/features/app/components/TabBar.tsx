@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { FolderKanban, GitBranch, MessagesSquare, TerminalSquare } from "lucide-react";
+import { useI18n } from "../../../i18n";
 
 type TabKey = "projects" | "codex" | "git" | "log";
 
@@ -8,14 +9,14 @@ type TabBarProps = {
   onSelect: (tab: TabKey) => void;
 };
 
-const tabs: { id: TabKey; label: string; icon: ReactNode }[] = [
-  { id: "projects", label: "Projects", icon: <FolderKanban className="tabbar-icon" /> },
-  { id: "codex", label: "Codex", icon: <MessagesSquare className="tabbar-icon" /> },
-  { id: "git", label: "Git", icon: <GitBranch className="tabbar-icon" /> },
-  { id: "log", label: "Log", icon: <TerminalSquare className="tabbar-icon" /> },
-];
-
 export function TabBar({ activeTab, onSelect }: TabBarProps) {
+  const { t } = useI18n();
+  const tabs: { id: TabKey; label: string; icon: ReactNode }[] = [
+    { id: "projects", label: t("app.tabs.projects"), icon: <FolderKanban className="tabbar-icon" /> },
+    { id: "codex", label: t("app.tabs.codex"), icon: <MessagesSquare className="tabbar-icon" /> },
+    { id: "git", label: t("app.tabs.git"), icon: <GitBranch className="tabbar-icon" /> },
+    { id: "log", label: t("app.tabs.log"), icon: <TerminalSquare className="tabbar-icon" /> },
+  ];
   return (
     <nav className="tabbar" aria-label="Primary">
       {tabs.map((tab) => (
