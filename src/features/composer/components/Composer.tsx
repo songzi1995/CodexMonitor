@@ -298,7 +298,7 @@ export function Composer({
           if (event.defaultPrevented) {
             return;
           }
-          if (event.key === "Enter" && !event.shiftKey) {
+          if (event.key === "Enter" && event.metaKey && !event.shiftKey) {
             if (isDictationBusy) {
               event.preventDefault();
               return;

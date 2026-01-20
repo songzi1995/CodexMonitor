@@ -98,6 +98,7 @@ npm run test:watch
 - Do not regenerate existing keys; reuse current keys and translations, and only add new keys when new strings appear.
 - Always run `npm run lint` → `npm run typecheck` → `npm run test:i18n` after a merge update.
 - Enable `git rerere` to reuse conflict resolutions for recurring upstream changes.
+- Local DMG builds should use rustup `rustc` (`~/.cargo/bin` first in `PATH`) and skip updater artifacts to avoid missing signing key failures. Use `npm run tauri:build:local` for local DMG output.
 
 ## Common Changes
 
