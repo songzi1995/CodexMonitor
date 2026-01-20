@@ -74,6 +74,29 @@ npm run typecheck
 
 Note: `npm run build` also runs `tsc` before bundling the frontend.
 
+## I18n Sync Workflow
+
+Local localization is maintained on the `i18n` branch while `main` tracks `upstream/main`.
+To merge upstream updates into `i18n`, use the sync helper:
+
+```bash
+./scripts/i18n-sync.sh
+```
+
+Options:
+
+```bash
+./scripts/i18n-sync.sh --skip-verify
+./scripts/i18n-sync.sh --date=YYYY-MM-DD
+```
+
+After resolving conflicts (if any), merge the temporary branch back into `i18n`.
+To detect new untranslated strings, run:
+
+```bash
+node scripts/i18n-scan.mjs
+```
+
 ## Project Structure
 
 ```
