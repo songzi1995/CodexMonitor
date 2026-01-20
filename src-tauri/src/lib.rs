@@ -3,15 +3,24 @@ use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
 
 mod backend;
 mod codex;
+mod codex_home;
 mod codex_config;
+#[cfg(not(target_os = "windows"))]
+#[path = "dictation.rs"]
+mod dictation;
+#[cfg(target_os = "windows")]
+#[path = "dictation_stub.rs"]
 mod dictation;
 mod event_sink;
 mod git;
 mod git_utils;
+mod local_usage;
 mod prompts;
+mod rules;
 mod settings;
 mod state;
 mod terminal;
+mod window;
 mod storage;
 mod types;
 mod utils;
@@ -35,7 +44,7 @@ pub fn run() {
                 .build(handle)?;
             let app_menu = Submenu::with_items(
                 handle,
-                app_name,
+                app_name.clone(),
                 true,
                 &[
                     &about_item,
@@ -221,6 +230,7 @@ pub fn run() {
             codex::codex_doctor,
             workspaces::list_workspaces,
             workspaces::add_workspace,
+            workspaces::add_clone,
             workspaces::add_worktree,
             workspaces::remove_workspace,
             workspaces::remove_worktree,
@@ -232,6 +242,7 @@ pub fn run() {
             codex::turn_interrupt,
             codex::start_review,
             codex::respond_to_server_request,
+            codex::remember_approval_rule,
             codex::resume_thread,
             codex::list_threads,
             codex::archive_thread,
@@ -275,7 +286,8 @@ pub fn run() {
             dictation::dictation_remove_model,
             dictation::dictation_start,
             dictation::dictation_stop,
-            dictation::dictation_cancel
+            dictation::dictation_cancel,
+            local_usage::local_usage_snapshot
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

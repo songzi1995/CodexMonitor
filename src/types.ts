@@ -9,6 +9,7 @@ export type WorkspaceGroup = {
   id: string;
   name: string;
   sortOrder?: number | null;
+  copiesFolder?: string | null;
 };
 
 export type WorkspaceKind = "main" | "worktree";
@@ -70,6 +71,7 @@ export type ReviewTarget =
 
 export type AccessMode = "read-only" | "current" | "full-access";
 export type BackendMode = "local" | "remote";
+export type ThemePreference = "system" | "light" | "dark";
 
 export type AppSettings = {
   codexBin: string | null;
@@ -83,6 +85,7 @@ export type AppSettings = {
   lastComposerModelId: string | null;
   lastComposerReasoningEffort: string | null;
   uiScale: number;
+  theme: ThemePreference;
   notificationSoundsEnabled: boolean;
   experimentalCollabEnabled: boolean;
   experimentalSteerEnabled: boolean;
@@ -202,6 +205,36 @@ export type ThreadTokenUsage = {
   total: TokenUsageBreakdown;
   last: TokenUsageBreakdown;
   modelContextWindow: number | null;
+};
+
+export type LocalUsageDay = {
+  day: string;
+  inputTokens: number;
+  cachedInputTokens: number;
+  outputTokens: number;
+  totalTokens: number;
+};
+
+export type LocalUsageTotals = {
+  last7DaysTokens: number;
+  last30DaysTokens: number;
+  averageDailyTokens: number;
+  cacheHitRatePercent: number;
+  peakDay: string | null;
+  peakDayTokens: number;
+};
+
+export type LocalUsageModel = {
+  model: string;
+  tokens: number;
+  sharePercent: number;
+};
+
+export type LocalUsageSnapshot = {
+  updatedAt: number;
+  days: LocalUsageDay[];
+  totals: LocalUsageTotals;
+  topModels: LocalUsageModel[];
 };
 
 export type TurnPlanStepStatus = "pending" | "inProgress" | "completed";

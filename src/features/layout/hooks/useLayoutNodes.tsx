@@ -33,6 +33,7 @@ import type {
   GitHubPullRequestComment,
   GitHubPullRequest,
   GitLogEntry,
+  LocalUsageSnapshot,
   ModelOption,
   QueuedMessage,
   RateLimitSnapshot,
@@ -84,6 +85,10 @@ type LayoutNodesOptions = {
     request: ApprovalRequest,
     decision: "accept" | "decline",
   ) => void;
+  handleApprovalRemember: (
+    request: ApprovalRequest,
+    command: string[],
+  ) => void;
   onOpenSettings: () => void;
   onOpenDictationSettings?: () => void;
   onOpenDebug: () => void;
@@ -94,6 +99,7 @@ type LayoutNodesOptions = {
   onConnectWorkspace: (workspace: WorkspaceInfo) => Promise<void>;
   onAddAgent: (workspace: WorkspaceInfo) => Promise<void>;
   onAddWorktreeAgent: (workspace: WorkspaceInfo) => Promise<void>;
+  onAddCloneAgent: (workspace: WorkspaceInfo) => Promise<void>;
   onToggleWorkspaceCollapse: (workspaceId: string, collapsed: boolean) => void;
   onSelectThread: (workspaceId: string, threadId: string) => void;
   onDeleteThread: (workspaceId: string, threadId: string) => void;
@@ -119,6 +125,10 @@ type LayoutNodesOptions = {
     isProcessing: boolean;
   }>;
   isLoadingLatestAgents: boolean;
+  localUsageSnapshot: LocalUsageSnapshot | null;
+  isLoadingLocalUsage: boolean;
+  localUsageError: string | null;
+  onRefreshLocalUsage: () => void;
   onSelectHomeThread: (workspaceId: string, threadId: string) => void;
   activeWorkspace: WorkspaceInfo | null;
   activeParentWorkspace: WorkspaceInfo | null;
@@ -341,6 +351,7 @@ export function useLayoutNodes(options: LayoutNodesOptions): LayoutNodesResult {
       onConnectWorkspace={options.onConnectWorkspace}
       onAddAgent={options.onAddAgent}
       onAddWorktreeAgent={options.onAddWorktreeAgent}
+      onAddCloneAgent={options.onAddCloneAgent}
       onToggleWorkspaceCollapse={options.onToggleWorkspaceCollapse}
       onSelectThread={options.onSelectThread}
       onDeleteThread={options.onDeleteThread}
@@ -433,6 +444,7 @@ export function useLayoutNodes(options: LayoutNodesOptions): LayoutNodesResult {
       approvals={options.approvals}
       workspaces={options.workspaces}
       onDecision={options.handleApprovalDecision}
+      onRemember={options.handleApprovalRemember}
     />
   );
 
@@ -450,6 +462,10 @@ export function useLayoutNodes(options: LayoutNodesOptions): LayoutNodesResult {
       onAddWorkspace={options.onAddWorkspace}
       latestAgentRuns={options.latestAgentRuns}
       isLoadingLatestAgents={options.isLoadingLatestAgents}
+      localUsageSnapshot={options.localUsageSnapshot}
+      isLoadingLocalUsage={options.isLoadingLocalUsage}
+      localUsageError={options.localUsageError}
+      onRefreshLocalUsage={options.onRefreshLocalUsage}
       onSelectThread={options.onSelectHomeThread}
     />
   );

@@ -133,7 +133,7 @@ export function ThreadList({
           {isExpanded ? t("threads.show_less") : t("threads.more")}
         </button>
       )}
-      {isExpanded && nextCursor && (
+      {nextCursor && (isExpanded || totalThreadRoots <= 3) && (
         <button
           className="thread-more"
           onClick={(event) => {
@@ -142,7 +142,11 @@ export function ThreadList({
           }}
           disabled={isPaging}
         >
-          {isPaging ? t("common.loading") : t("threads.load_older")}
+          {isPaging
+            ? t("common.loading")
+            : totalThreadRoots === 0
+              ? t("threads.search_older")
+              : t("threads.load_older")}
         </button>
       )}
     </div>

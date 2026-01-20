@@ -5,6 +5,7 @@ import type {
   CodexDoctorResult,
   DictationModelStatus,
   DictationSessionState,
+  LocalUsageSnapshot,
   WorkspaceInfo,
   WorkspaceSettings,
 } from "../types";
@@ -52,6 +53,18 @@ export async function addWorkspace(
   codex_bin: string | null,
 ): Promise<WorkspaceInfo> {
   return invoke<WorkspaceInfo>("add_workspace", { path, codex_bin });
+}
+
+export async function addClone(
+  sourceWorkspaceId: string,
+  copiesFolder: string,
+  copyName: string,
+): Promise<WorkspaceInfo> {
+  return invoke<WorkspaceInfo>("add_clone", {
+    sourceWorkspaceId,
+    copiesFolder,
+    copyName,
+  });
 }
 
 export async function addWorktree(
@@ -156,6 +169,13 @@ export async function respondToServerRequest(
   });
 }
 
+export async function rememberApprovalRule(
+  workspaceId: string,
+  command: string[],
+) {
+  return invoke("remember_approval_rule", { workspaceId, command });
+}
+
 export async function getGitStatus(workspace_id: string): Promise<{
   branchName: string;
   files: GitFileStatus[];
@@ -237,6 +257,12 @@ export async function getGitHubPullRequestComments(
     workspaceId: workspace_id,
     prNumber,
   });
+}
+
+export async function localUsageSnapshot(
+  days?: number,
+): Promise<LocalUsageSnapshot> {
+  return invoke("local_usage_snapshot", { days: days ?? 30 });
 }
 
 export async function getModelList(workspaceId: string) {

@@ -19,6 +19,7 @@ import "./styles/plan.css";
 import "./styles/about.css";
 import "./styles/tabbar.css";
 import "./styles/worktree-modal.css";
+import "./styles/clone-modal.css";
 import "./styles/settings.css";
 import "./styles/compact-base.css";
 import "./styles/compact-phone.css";
@@ -26,6 +27,7 @@ import "./styles/compact-tablet.css";
 import successSoundUrl from "./assets/success-notification.mp3";
 import errorSoundUrl from "./assets/error-notification.mp3";
 import { WorktreePrompt } from "./features/workspaces/components/WorktreePrompt";
+import { ClonePrompt } from "./features/workspaces/components/ClonePrompt";
 import { RenameThreadPrompt } from "./features/threads/components/RenameThreadPrompt";
 import { AboutView } from "./features/about/components/AboutView";
 import { SettingsView } from "./features/settings/components/SettingsView";
@@ -59,6 +61,7 @@ import { useResizablePanels } from "./features/layout/hooks/useResizablePanels";
 import { useLayoutMode } from "./features/layout/hooks/useLayoutMode";
 import { useSidebarToggles } from "./features/layout/hooks/useSidebarToggles";
 import { useTransparencyPreference } from "./features/layout/hooks/useTransparencyPreference";
+import { useThemePreference } from "./features/layout/hooks/useThemePreference";
 import { useWindowLabel } from "./features/layout/hooks/useWindowLabel";
 import { revealItemInDir } from "@tauri-apps/plugin-opener";
 import {
@@ -76,8 +79,10 @@ import { useHoldToDictate } from "./features/dictation/hooks/useHoldToDictate";
 import { useQueuedSend } from "./features/threads/hooks/useQueuedSend";
 import { useRenameThreadPrompt } from "./features/threads/hooks/useRenameThreadPrompt";
 import { useWorktreePrompt } from "./features/workspaces/hooks/useWorktreePrompt";
+import { useClonePrompt } from "./features/workspaces/hooks/useClonePrompt";
 import { useUiScaleShortcuts } from "./features/layout/hooks/useUiScaleShortcuts";
 import { useWorkspaceSelection } from "./features/workspaces/hooks/useWorkspaceSelection";
+import { useLocalUsage } from "./features/home/hooks/useLocalUsage";
 import { useNewAgentShortcut } from "./features/app/hooks/useNewAgentShortcut";
 import { useAgentSoundNotifications } from "./features/notifications/hooks/useAgentSoundNotifications";
 import { useWindowFocusState } from "./features/layout/hooks/useWindowFocusState";
@@ -105,6 +110,7 @@ function MainApp() {
     isLoading: appSettingsLoading
   } = useAppSettings();
   const { t } = useI18n();
+  useThemePreference(appSettings.theme);
   const dictationModel = useDictationModel(appSettings.dictationModelId);
   const {
     state: dictationState,
@@ -290,6 +296,7 @@ function MainApp() {
     activeWorkspaceId,
     setActiveWorkspaceId,
     addWorkspace,
+    addCloneAgent,
     addWorktreeAgent,
     connectWorkspace,
     markWorkspaceConnected,
@@ -319,6 +326,34 @@ function MainApp() {
 
   const { status: gitStatus, refresh: refreshGitStatus } =
     useGitStatus(activeWorkspace);
+  const gitStatusRefreshTimeoutRef = useRef<number | null>(null);
+  const activeWorkspaceIdRef = useRef<string | null>(activeWorkspace?.id ?? null);
+  useEffect(() => {
+    activeWorkspaceIdRef.current = activeWorkspace?.id ?? null;
+  }, [activeWorkspace?.id]);
+  useEffect(() => {
+    return () => {
+      if (gitStatusRefreshTimeoutRef.current !== null) {
+        window.clearTimeout(gitStatusRefreshTimeoutRef.current);
+      }
+    };
+  }, []);
+  const queueGitStatusRefresh = useCallback(() => {
+    const workspaceId = activeWorkspaceIdRef.current;
+    if (!workspaceId) {
+      return;
+    }
+    if (gitStatusRefreshTimeoutRef.current !== null) {
+      window.clearTimeout(gitStatusRefreshTimeoutRef.current);
+    }
+    gitStatusRefreshTimeoutRef.current = window.setTimeout(() => {
+      gitStatusRefreshTimeoutRef.current = null;
+      if (activeWorkspaceIdRef.current !== workspaceId) {
+        return;
+      }
+      refreshGitStatus();
+    }, 500);
+  }, [refreshGitStatus]);
   const compactTab = isTablet ? tabletTab : activeTab;
   const shouldLoadDiffs =
     centerMode === "diff" || (isCompact && compactTab === "git");
@@ -603,7 +638,8 @@ function MainApp() {
     sendUserMessage,
     sendUserMessageToThread,
     startReview,
-    handleApprovalDecision
+    handleApprovalDecision,
+    handleApprovalRemember
   } = useThreads({
     activeWorkspace,
     onWorkspaceConnected: markWorkspaceConnected,
@@ -613,7 +649,7 @@ function MainApp() {
     collaborationMode: selectedCollaborationMode?.value ?? null,
     accessMode,
     customPrompts: prompts,
-    onMessageActivity: refreshGitStatus
+    onMessageActivity: queueGitStatusRefresh
   });
 
   const { handleCopyThread } = useCopyThread({
@@ -679,6 +715,59 @@ function MainApp() {
     },
   });
 
+  const resolveCloneProjectContext = useCallback(
+    (workspace: WorkspaceInfo) => {
+      const groupId = workspace.settings.groupId ?? null;
+      const group = groupId
+        ? appSettings.workspaceGroups.find((entry) => entry.id === groupId)
+        : null;
+      return {
+        groupId,
+        copiesFolder: group?.copiesFolder ?? null,
+      };
+    },
+    [appSettings.workspaceGroups],
+  );
+
+  const persistProjectCopiesFolder = useCallback(
+    async (groupId: string, copiesFolder: string) => {
+      await queueSaveSettings({
+        ...appSettings,
+        workspaceGroups: appSettings.workspaceGroups.map((entry) =>
+          entry.id === groupId ? { ...entry, copiesFolder } : entry,
+        ),
+      });
+    },
+    [appSettings, queueSaveSettings],
+  );
+
+  const {
+    clonePrompt,
+    openPrompt: openClonePrompt,
+    confirmPrompt: confirmClonePrompt,
+    cancelPrompt: cancelClonePrompt,
+    updateCopyName: updateCloneCopyName,
+    chooseCopiesFolder: chooseCloneCopiesFolder,
+    useSuggestedCopiesFolder: useSuggestedCloneCopiesFolder,
+    clearCopiesFolder: clearCloneCopiesFolder,
+  } = useClonePrompt({
+    addCloneAgent,
+    connectWorkspace,
+    onSelectWorkspace: selectWorkspace,
+    resolveProjectContext: resolveCloneProjectContext,
+    persistProjectCopiesFolder,
+    onCompactActivate: isCompact ? () => setActiveTab("codex") : undefined,
+    onError: (message) => {
+      addDebugEntry({
+        id: `${Date.now()}-client-add-clone-error`,
+        timestamp: Date.now(),
+        source: "error",
+        label: "clone/add error",
+        payload: message,
+      });
+    },
+  });
+
   const latestAgentRuns = useMemo(() => {
     const entries: Array<{
       threadId: string;
@@ -737,6 +826,12 @@ function MainApp() {
     activePlan && (activePlan.steps.length > 0 || activePlan.explanation)
   );
   const showHome = !activeWorkspace;
+  const {
+    snapshot: localUsageSnapshot,
+    isLoading: isLoadingLocalUsage,
+    error: localUsageError,
+    refresh: refreshLocalUsage,
+  } = useLocalUsage(showHome);
   const canInterrupt = activeThreadId
     ? threadStatusById[activeThreadId]?.isProcessing ?? false
     : false;
@@ -969,6 +1064,11 @@ function MainApp() {
     openWorktreePrompt(workspace);
   }
 
+  async function handleAddCloneAgent(workspace: (typeof workspaces)[number]) {
+    exitDiffView();
+    openClonePrompt(workspace);
+  }
+
   function handleSelectDiff(path: string) {
     setSelectedDiffPath(path);
     pendingDiffScrollRef.current = true;
@@ -1163,6 +1263,7 @@ function MainApp() {
     activeRateLimits,
     approvals,
     handleApprovalDecision,
+    handleApprovalRemember,
     onOpenSettings: () => handleOpenSettings(),
     onOpenDictationSettings: () => handleOpenSettings("dictation"),
     onOpenDebug: handleDebugClick,
@@ -1181,6 +1282,7 @@ function MainApp() {
     },
     onAddAgent: handleAddAgent,
     onAddWorktreeAgent: handleAddWorktreeAgent,
+    onAddCloneAgent: handleAddCloneAgent,
     onToggleWorkspaceCollapse: (workspaceId, collapsed) => {
       const target = workspaces.find((entry) => entry.id === workspaceId);
       if (!target) {
@@ -1239,6 +1341,12 @@ function MainApp() {
     onDismissUpdate: updater.dismiss,
     latestAgentRuns,
     isLoadingLatestAgents,
+    localUsageSnapshot,
+    isLoadingLocalUsage,
+    localUsageError,
+    onRefreshLocalUsage: () => {
+      refreshLocalUsage()?.catch(() => {});
+    },
     onSelectHomeThread: (workspaceId, threadId) => {
       exitDiffView();
       selectWorkspace(workspaceId);
@@ -1541,6 +1649,22 @@ function MainApp() {
           onChange={updateWorktreeBranch}
           onCancel={cancelWorktreePrompt}
           onConfirm={confirmWorktreePrompt}
+        />
+      )}
+      {clonePrompt && (
+        <ClonePrompt
+          workspaceName={clonePrompt.workspace.name}
+          copyName={clonePrompt.copyName}
+          copiesFolder={clonePrompt.copiesFolder}
+          suggestedCopiesFolder={clonePrompt.suggestedCopiesFolder}
+          error={clonePrompt.error}
+          isBusy={clonePrompt.isSubmitting}
+          onCopyNameChange={updateCloneCopyName}
+          onChooseCopiesFolder={chooseCloneCopiesFolder}
+          onUseSuggestedCopiesFolder={useSuggestedCloneCopiesFolder}
+          onClearCopiesFolder={clearCloneCopiesFolder}
+          onCancel={cancelClonePrompt}
+          onConfirm={confirmClonePrompt}
         />
       )}
       {settingsOpen && (
