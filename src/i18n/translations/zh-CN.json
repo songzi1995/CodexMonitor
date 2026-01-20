@@ -7,7 +7,8 @@
     "loading": "加载中...",
     "create": "创建",
     "delete": "删除",
-    "edit": "编辑"
+    "edit": "编辑",
+    "clear": "清除"
   },
   "settings": {
     "language": {
@@ -29,7 +30,11 @@
       "title": "项目",
       "subtitle": "将工作区分组并设置每个项目的默认选项。",
       "empty": "暂无项目。",
-      "delete": "删除项目"
+      "delete": "删除项目",
+      "move_up": "上移项目",
+      "move_down": "下移项目",
+      "list_title": "项目",
+      "list_subtitle": "将项目分配到分组并调整顺序。"
     },
     "display": {
       "title": "显示与声音",
@@ -53,7 +58,11 @@
         "title": "通知音效",
         "subtitle": "当窗口失焦且长任务完成时播放提示音。",
         "test": "测试声音"
-      }
+      },
+      "theme": "主题",
+      "theme_system": "跟随系统",
+      "theme_light": "浅色",
+      "theme_dark": "深色"
     },
     "dictation": {
       "title": "语音输入",
@@ -152,7 +161,12 @@
       "remote_token_placeholder": "令牌（可选）",
       "workspace_overrides": "工作区覆盖设置",
       "override_placeholder": "使用默认值",
-      "overrides_empty": "暂无项目。"
+      "overrides_empty": "暂无项目。",
+      "use_path": "使用 PATH",
+      "path_help": "留空以使用系统 PATH 的解析结果。",
+      "path_prefix": "PATH：",
+      "backend_mode_help": "远程模式会连接到另一台机器上运行后端的守护进程（如 WSL2/Linux）。",
+      "remote_help": "请单独启动守护进程，并填写 CodexMonitor 的地址（host:port + token）。"
     },
     "experimental": {
       "title": "实验性功能",
@@ -169,6 +183,21 @@
         "title": "引导模式",
         "subtitle": "启用更丰富的引导能力。"
       }
+    },
+    "title": "设置",
+    "close": "关闭设置",
+    "groups": {
+      "title": "分组",
+      "subtitle": "为相关仓库创建分组标签。",
+      "new_group_placeholder": "新分组名称",
+      "add": "添加分组",
+      "copies_folder": "副本文件夹",
+      "copies_not_set": "未设置",
+      "choose": "选择…",
+      "move_up": "上移分组",
+      "move_down": "下移分组",
+      "delete": "删除分组",
+      "empty": "暂无分组。"
     }
   },
   "app": {
@@ -178,7 +207,9 @@
       "git": "Git",
       "files": "文件",
       "prompts": "提示词",
-      "log": "日志"
+      "log": "日志",
+      "primary_label": "主导航",
+      "workspace_label": "工作区"
     },
     "git_status": {
       "unavailable": "无法获取 Git 状态",
@@ -189,10 +220,37 @@
     "worktree": {
       "apply": "应用",
       "apply_help": "将改动应用到父工作区",
-      "apply_named": "将改动应用到 {{name}}"
+      "apply_named": "将改动应用到 {{name}}",
+      "applied": "已应用",
+      "applying": "应用中..."
     },
     "actions": {
       "go_projects": "返回项目"
+    },
+    "approvals": {
+      "title": "需要审批",
+      "empty_details": "没有额外详情。",
+      "none": "无",
+      "decline": "拒绝",
+      "always_allow": "始终允许",
+      "allow_prefix": "允许以 {{preview}} 开头的命令",
+      "approve_shortcut": "批准（Enter）"
+    },
+    "header": {
+      "worktree_info": "工作区信息",
+      "worktree_label": "工作区",
+      "terminal": "终端",
+      "repo_root_suffix": "（仓库根目录）",
+      "copy_command": "复制命令",
+      "open_terminal_hint": "在终端中打开该工作区。",
+      "reveal": "显示",
+      "create_branch": "创建分支",
+      "new_branch_placeholder": "新分支名称",
+      "create_and_checkout": "创建并切换",
+      "no_branches": "未找到分支",
+      "select_editor": "选择编辑器",
+      "toggle_terminal": "切换终端面板",
+      "copy_thread": "复制会话"
     }
   },
   "home": {
@@ -205,7 +263,26 @@
     "empty_title": "暂无代理活动",
     "empty_subtitle": "开始一个对话后，最新回复会显示在这里。",
     "open_project": "打开项目",
-    "add_workspace": "添加工作区"
+    "add_workspace": "添加工作区",
+    "usage": {
+      "title": "用量概览",
+      "updated": "更新于 {{time}}",
+      "refresh": "刷新用量",
+      "empty_title": "暂无用量数据",
+      "empty_subtitle": "运行一次 Codex 会话以开始统计本地用量。",
+      "last_7_days": "最近 7 天",
+      "tokens": "令牌",
+      "avg_per_day": "日均 {{value}}",
+      "last_30_days": "最近 30 天",
+      "total": "总计 {{value}}",
+      "cache_hit_rate": "缓存命中率",
+      "peak_day": "峰值日",
+      "tokens_with_value": "{{value}} 令牌",
+      "chart_label": "{{day}} · {{tokens}} 令牌",
+      "top_models": "热门模型",
+      "model_tokens": "{{model}}：{{tokens}} 令牌",
+      "no_models": "暂无模型"
+    }
   },
   "update": {
     "title": "更新",
@@ -219,7 +296,8 @@
     "failed": "更新失败。",
     "dismiss": "关闭",
     "retry": "重试",
-    "downloaded": "{{size}} 已下载"
+    "downloaded": "{{size}} 已下载",
+    "version_prefix": "v{{version}}"
   },
   "about": {
     "icon_alt": "Codex Monitor 图标",
@@ -274,7 +352,8 @@
     "access_on_request": "按需授权",
     "access_full": "完全访问",
     "context_free_unknown": "空闲上下文 --",
-    "context_free": "空闲上下文 {{percent}}%"
+    "context_free": "空闲上下文 {{percent}}%",
+    "dictation_processing_short": "处理中..."
   },
   "git": {
     "diff_unavailable": "无法显示差异。",
@@ -312,7 +391,36 @@
     },
     "prs": {
       "header": "GitHub 拉取请求",
-      "open_count": "{{count}} 个未关闭"
+      "open_count": "{{count}} 个未关闭",
+      "empty": "没有打开的拉取请求。",
+      "unknown_author": "未知"
+    },
+    "root": {
+      "path_label": "路径：",
+      "change_label": "更改",
+      "choose_repo_title": "为该工作区选择仓库。",
+      "scan_workspace": "扫描工作区",
+      "depth": "深度",
+      "pick_folder": "选择文件夹",
+      "use_workspace_root": "使用工作区根目录",
+      "scanning": "正在扫描仓库...",
+      "none_found": "未找到仓库。",
+      "active": "当前"
+    },
+    "diff": {
+      "staged": "已暂存",
+      "unstaged": "未暂存",
+      "revert_all": "撤销所有更改",
+      "revert": "撤销"
+    },
+    "log": {
+      "loading_commits": "正在加载提交...",
+      "empty": "暂无提交。",
+      "to_push": "待推送",
+      "to_pull": "待拉取",
+      "recent": "最近提交",
+      "no_message": "无提交信息",
+      "unknown_author": "未知"
     }
   },
   "layout": {
@@ -320,14 +428,21 @@
       "sidebar": "调整侧边栏大小",
       "right_panel": "调整右侧面板大小",
       "plan_panel": "调整计划面板大小",
-      "projects": "调整项目栏大小"
+      "projects": "调整项目栏大小",
+      "terminal": "调整终端面板大小"
     },
     "toggle": {
       "hide_threads": "隐藏对话侧边栏",
       "show_threads": "显示对话侧边栏",
       "hide_git": "隐藏 Git 侧边栏",
       "show_git": "显示 Git 侧边栏"
-    }
+    },
+    "back_to_chat": "返回聊天",
+    "empty_workspace_title": "未选择工作区",
+    "empty_chat_subtitle": "选择一个项目开始对话。",
+    "empty_git_subtitle": "选择一个项目查看 diff。",
+    "back": "‹ 返回",
+    "panel_tabs_label": "面板"
   },
   "plan": {
     "title": "计划",
@@ -371,6 +486,22 @@
       "title": "新建工作树代理",
       "subtitle": "在“{{name}}”下创建工作树。",
       "branch_label": "分支名称"
+    },
+    "new_clone_agent": "新建克隆代理",
+    "clone": {
+      "title": "新建克隆代理",
+      "subtitle": "创建“{{name}}”的新工作副本。",
+      "copy_name": "副本名称",
+      "copies_folder": "副本文件夹",
+      "not_set": "未设置",
+      "choose": "选择…",
+      "clear": "清除",
+      "suggested": "推荐",
+      "suggested_aria": "推荐的副本文件夹",
+      "copy": "复制",
+      "use_suggested": "使用推荐项",
+      "cancel": "取消",
+      "create": "创建"
     }
   },
   "usage": {
@@ -434,5 +565,26 @@
       "error_name_required": "名称不能为空。",
       "error_name_whitespace": "名称不能包含空白字符。"
     }
+  },
+  "messages": {
+    "copy_message": "复制消息",
+    "reasoning_default": "推理",
+    "toggle_reasoning": "切换推理详情",
+    "review_started": "审核开始",
+    "review_completed": "审核完成",
+    "review_label": "审核",
+    "toggle_tool": "切换工具详情",
+    "files_edited_plural": "已编辑文件",
+    "file_edited_single": "已编辑文件",
+    "changes_fallback": "更改",
+    "cwd": "cwd：{{path}}",
+    "working": "处理中…",
+    "done_in": "耗时 {{duration}}",
+    "empty_prompt": "开始一个会话并发送提示给代理。"
+  },
+  "terminal": {
+    "tabs_label": "终端标签",
+    "close_tab": "关闭 {{name}}",
+    "new": "新建终端"
   }
 }

@@ -7,7 +7,8 @@
     "loading": "Loading...",
     "create": "Create",
     "delete": "Delete",
-    "edit": "Edit"
+    "edit": "Edit",
+    "clear": "Clear"
   },
   "settings": {
     "language": {
@@ -29,7 +30,11 @@
       "title": "Projects",
       "subtitle": "Organize your workspaces into groups and set per-project defaults.",
       "empty": "No projects yet.",
-      "delete": "Delete project"
+      "delete": "Delete project",
+      "move_up": "Move project up",
+      "move_down": "Move project down",
+      "list_title": "Projects",
+      "list_subtitle": "Assign projects to groups and adjust their order."
     },
     "display": {
       "title": "Display & Sound",
@@ -53,7 +58,11 @@
         "title": "Notification sounds",
         "subtitle": "Play a sound when a long-running agent finishes while the window is unfocused.",
         "test": "Test sound"
-      }
+      },
+      "theme": "Theme",
+      "theme_system": "System",
+      "theme_light": "Light",
+      "theme_dark": "Dark"
     },
     "dictation": {
       "title": "Dictation",
@@ -152,7 +161,12 @@
       "remote_token_placeholder": "Token (optional)",
       "workspace_overrides": "Workspace overrides",
       "override_placeholder": "Use default",
-      "overrides_empty": "No projects yet."
+      "overrides_empty": "No projects yet.",
+      "use_path": "Use PATH",
+      "path_help": "Leave empty to use the system PATH resolution.",
+      "path_prefix": "PATH:",
+      "backend_mode_help": "Remote mode connects to a separate daemon running the backend on another machine (e.g. WSL2/Linux).",
+      "remote_help": "Start the daemon separately and point CodexMonitor to it (host:port + token)."
     },
     "experimental": {
       "title": "Experimental",
@@ -169,6 +183,21 @@
         "title": "Steer mode",
         "subtitle": "Enable steer mode for richer guidance."
       }
+    },
+    "title": "Settings",
+    "close": "Close settings",
+    "groups": {
+      "title": "Groups",
+      "subtitle": "Create group labels for related repositories.",
+      "new_group_placeholder": "New group name",
+      "add": "Add group",
+      "copies_folder": "Copies folder",
+      "copies_not_set": "Not set",
+      "choose": "Choose…",
+      "move_up": "Move group up",
+      "move_down": "Move group down",
+      "delete": "Delete group",
+      "empty": "No groups yet."
     }
   },
   "app": {
@@ -178,7 +207,9 @@
       "git": "Git",
       "files": "Files",
       "prompts": "Prompts",
-      "log": "Log"
+      "log": "Log",
+      "primary_label": "Primary",
+      "workspace_label": "Workspace"
     },
     "git_status": {
       "unavailable": "Git status unavailable",
@@ -189,10 +220,37 @@
     "worktree": {
       "apply": "Apply",
       "apply_help": "Apply changes to parent workspace",
-      "apply_named": "Apply changes to {{name}}"
+      "apply_named": "Apply changes to {{name}}",
+      "applied": "applied",
+      "applying": "applying..."
     },
     "actions": {
       "go_projects": "Go to projects"
+    },
+    "approvals": {
+      "title": "Approval needed",
+      "empty_details": "No extra details.",
+      "none": "None",
+      "decline": "Decline",
+      "always_allow": "Always allow",
+      "allow_prefix": "Allow commands that start with {{preview}}",
+      "approve_shortcut": "Approve (Enter)"
+    },
+    "header": {
+      "worktree_info": "Worktree info",
+      "worktree_label": "Worktree",
+      "terminal": "Terminal",
+      "repo_root_suffix": " (repo root)",
+      "copy_command": "Copy command",
+      "open_terminal_hint": "Open this worktree in your terminal.",
+      "reveal": "Reveal",
+      "create_branch": "Create branch",
+      "new_branch_placeholder": "new-branch-name",
+      "create_and_checkout": "Create + checkout",
+      "no_branches": "No branches found",
+      "select_editor": "Select editor",
+      "toggle_terminal": "Toggle terminal panel",
+      "copy_thread": "Copy thread"
     }
   },
   "home": {
@@ -205,7 +263,26 @@
     "empty_title": "No agent activity yet",
     "empty_subtitle": "Start a thread to see the latest responses here.",
     "open_project": "Open Project",
-    "add_workspace": "Add Workspace"
+    "add_workspace": "Add Workspace",
+    "usage": {
+      "title": "Usage snapshot",
+      "updated": "Updated {{time}}",
+      "refresh": "Refresh usage",
+      "empty_title": "No usage data yet",
+      "empty_subtitle": "Run a Codex session to start tracking local usage.",
+      "last_7_days": "Last 7 days",
+      "tokens": "tokens",
+      "avg_per_day": "Avg {{value}} / day",
+      "last_30_days": "Last 30 days",
+      "total": "Total {{value}}",
+      "cache_hit_rate": "Cache hit rate",
+      "peak_day": "Peak day",
+      "tokens_with_value": "{{value}} tokens",
+      "chart_label": "{{day}} · {{tokens}} tokens",
+      "top_models": "Top models",
+      "model_tokens": "{{model}}: {{tokens}} tokens",
+      "no_models": "No models yet"
+    }
   },
   "update": {
     "title": "Update",
@@ -219,7 +296,8 @@
     "failed": "Update failed.",
     "dismiss": "Dismiss",
     "retry": "Retry",
-    "downloaded": "{{size}} downloaded"
+    "downloaded": "{{size}} downloaded",
+    "version_prefix": "v{{version}}"
   },
   "about": {
     "icon_alt": "Codex Monitor icon",
@@ -274,7 +352,8 @@
     "access_on_request": "On-Request",
     "access_full": "Full access",
     "context_free_unknown": "Context free --",
-    "context_free": "Context free {{percent}}%"
+    "context_free": "Context free {{percent}}%",
+    "dictation_processing_short": "Processing..."
   },
   "git": {
     "diff_unavailable": "Diff unavailable.",
@@ -312,7 +391,36 @@
     },
     "prs": {
       "header": "GitHub pull requests",
-      "open_count": "{{count}} open"
+      "open_count": "{{count}} open",
+      "empty": "No open pull requests.",
+      "unknown_author": "unknown"
+    },
+    "root": {
+      "path_label": "Path:",
+      "change_label": "Change",
+      "choose_repo_title": "Choose a repo for this workspace.",
+      "scan_workspace": "Scan workspace",
+      "depth": "Depth",
+      "pick_folder": "Pick folder",
+      "use_workspace_root": "Use workspace root",
+      "scanning": "Scanning for repositories...",
+      "none_found": "No repositories found.",
+      "active": "Active"
+    },
+    "diff": {
+      "staged": "Staged",
+      "unstaged": "Unstaged",
+      "revert_all": "Revert all changes",
+      "revert": "revert"
+    },
+    "log": {
+      "loading_commits": "Loading commits...",
+      "empty": "No commits yet.",
+      "to_push": "To push",
+      "to_pull": "To pull",
+      "recent": "Recent commits",
+      "no_message": "No message",
+      "unknown_author": "Unknown"
     }
   },
   "layout": {
@@ -320,14 +428,21 @@
       "sidebar": "Resize sidebar",
       "right_panel": "Resize right panel",
       "plan_panel": "Resize plan panel",
-      "projects": "Resize projects"
+      "projects": "Resize projects",
+      "terminal": "Resize terminal panel"
     },
     "toggle": {
       "hide_threads": "Hide threads sidebar",
       "show_threads": "Show threads sidebar",
       "hide_git": "Hide git sidebar",
       "show_git": "Show git sidebar"
-    }
+    },
+    "back_to_chat": "Back to chat",
+    "empty_workspace_title": "No workspace selected",
+    "empty_chat_subtitle": "Choose a project to start chatting.",
+    "empty_git_subtitle": "Select a project to inspect diffs.",
+    "back": "‹ Back",
+    "panel_tabs_label": "Panel"
   },
   "plan": {
     "title": "Plan",
@@ -371,6 +486,22 @@
       "title": "New worktree agent",
       "subtitle": "Create a worktree under \"{{name}}\".",
       "branch_label": "Branch name"
+    },
+    "new_clone_agent": "New clone agent",
+    "clone": {
+      "title": "New clone agent",
+      "subtitle": "Create a new working copy of \"{{name}}\".",
+      "copy_name": "Copy name",
+      "copies_folder": "Copies folder",
+      "not_set": "Not set",
+      "choose": "Choose…",
+      "clear": "Clear",
+      "suggested": "Suggested",
+      "suggested_aria": "Suggested copies folder",
+      "copy": "Copy",
+      "use_suggested": "Use suggested",
+      "cancel": "Cancel",
+      "create": "Create"
     }
   },
   "usage": {
@@ -434,5 +565,26 @@
       "error_name_required": "Name is required.",
       "error_name_whitespace": "Name cannot include whitespace."
     }
+  },
+  "messages": {
+    "copy_message": "Copy message",
+    "reasoning_default": "Reasoning",
+    "toggle_reasoning": "Toggle reasoning details",
+    "review_started": "Review started",
+    "review_completed": "Review completed",
+    "review_label": "Review",
+    "toggle_tool": "Toggle tool details",
+    "files_edited_plural": "files edited",
+    "file_edited_single": "file edited",
+    "changes_fallback": "changes",
+    "cwd": "cwd: {{path}}",
+    "working": "Working…",
+    "done_in": "Done in {{duration}}",
+    "empty_prompt": "Start a thread and send a prompt to the agent."
+  },
+  "terminal": {
+    "tabs_label": "Terminal tabs",
+    "close_tab": "Close {{name}}",
+    "new": "New terminal"
   }
 }

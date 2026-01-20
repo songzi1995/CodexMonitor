@@ -435,12 +435,12 @@ export function SettingsView({
       <div className="settings-backdrop" onClick={onClose} />
       <div className="settings-window">
         <div className="settings-titlebar">
-          <div className="settings-title">Settings</div>
+          <div className="settings-title">{t("settings.title")}</div>
           <button
             type="button"
             className="ghost icon-button settings-close"
             onClick={onClose}
-            aria-label="Close settings"
+            aria-label={t("settings.close")}
           >
             <X aria-hidden />
           </button>
@@ -503,16 +503,18 @@ export function SettingsView({
                 <div className="settings-section-subtitle">
                   {t("settings.projects.subtitle")}
                 </div>
-                <div className="settings-subsection-title">Groups</div>
+                <div className="settings-subsection-title">
+                  {t("settings.groups.title")}
+                </div>
                 <div className="settings-subsection-subtitle">
-                  Create group labels for related repositories.
+                  {t("settings.groups.subtitle")}
                 </div>
                 <div className="settings-groups">
                   <div className="settings-group-create">
                     <input
                       className="settings-input settings-input--compact"
                       value={newGroupName}
-                      placeholder="New group name"
+                      placeholder={t("settings.groups.new_group_placeholder")}
                       onChange={(event) => setNewGroupName(event.target.value)}
                       onKeyDown={(event) => {
                         if (event.key === "Enter" && canCreateGroup) {
@@ -529,7 +531,7 @@ export function SettingsView({
                       }}
                       disabled={!canCreateGroup}
                     >
-                      Add group
+                      {t("settings.groups.add")}
                     </button>
                   </div>
                   {groupError && <div className="settings-group-error">{groupError}</div>}
@@ -559,7 +561,7 @@ export function SettingsView({
                             />
                             <div className="settings-group-copies">
                               <div className="settings-group-copies-label">
-                                Copies folder
+                                {t("settings.groups.copies_folder")}
                               </div>
                               <div className="settings-group-copies-row">
                                 <div
@@ -568,7 +570,8 @@ export function SettingsView({
                                   }`}
                                   title={group.copiesFolder ?? ""}
                                 >
-                                  {group.copiesFolder ?? "Not set"}
+                                  {group.copiesFolder ??
+                                    t("settings.groups.copies_not_set")}
                                 </div>
                                 <button
                                   type="button"
@@ -577,7 +580,7 @@ export function SettingsView({
                                     void handleChooseGroupCopiesFolder(group);
                                   }}
                                 >
-                                  Choose…
+                                  {t("settings.groups.choose")}
                                 </button>
                                 <button
                                   type="button"
@@ -587,7 +590,7 @@ export function SettingsView({
                                   }}
                                   disabled={!group.copiesFolder}
                                 >
-                                  Clear
+                                  {t("common.clear")}
                                 </button>
                               </div>
                             </div>
@@ -600,7 +603,7 @@ export function SettingsView({
                                 void onMoveWorkspaceGroup(group.id, "up");
                               }}
                               disabled={index === 0}
-                              aria-label="Move group up"
+                              aria-label={t("settings.groups.move_up")}
                             >
                               <ChevronUp aria-hidden />
                             </button>
@@ -611,7 +614,7 @@ export function SettingsView({
                                 void onMoveWorkspaceGroup(group.id, "down");
                               }}
                               disabled={index === workspaceGroups.length - 1}
-                              aria-label="Move group down"
+                              aria-label={t("settings.groups.move_down")}
                             >
                               <ChevronDown aria-hidden />
                             </button>
@@ -621,7 +624,7 @@ export function SettingsView({
                               onClick={() => {
                                 void handleDeleteGroup(group);
                               }}
-                              aria-label="Delete group"
+                              aria-label={t("settings.groups.delete")}
                             >
                               <Trash2 aria-hidden />
                             </button>
@@ -630,12 +633,16 @@ export function SettingsView({
                       ))}
                     </div>
                   ) : (
-                    <div className="settings-empty">No groups yet.</div>
+                    <div className="settings-empty">
+                      {t("settings.groups.empty")}
+                    </div>
                   )}
                 </div>
-                <div className="settings-subsection-title">Projects</div>
+                <div className="settings-subsection-title">
+                  {t("settings.projects.list_title")}
+                </div>
                 <div className="settings-subsection-subtitle">
-                  Assign projects to groups and adjust their order.
+                  {t("settings.projects.list_subtitle")}
                 </div>
                 <div className="settings-projects">
                   {groupedWorkspaces.map((group) => (
@@ -678,7 +685,7 @@ export function SettingsView({
                                 className="ghost icon-button"
                                 onClick={() => onMoveWorkspace(workspace.id, "up")}
                                 disabled={index === 0}
-                                aria-label="Move project up"
+                                aria-label={t("settings.projects.move_up")}
                               >
                                 <ChevronUp aria-hidden />
                               </button>
@@ -687,7 +694,7 @@ export function SettingsView({
                                 className="ghost icon-button"
                                 onClick={() => onMoveWorkspace(workspace.id, "down")}
                                 disabled={index === group.workspaces.length - 1}
-                                aria-label="Move project down"
+                                aria-label={t("settings.projects.move_down")}
                               >
                                 <ChevronDown aria-hidden />
                               </button>
@@ -725,7 +732,7 @@ export function SettingsView({
                 </div>
                 <div className="settings-field">
                   <label className="settings-field-label" htmlFor="theme-select">
-                    Theme
+                    {t("settings.display.theme")}
                   </label>
                   <select
                     id="theme-select"
@@ -738,9 +745,9 @@ export function SettingsView({
                       })
                     }
                   >
-                    <option value="system">System</option>
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
+                    <option value="system">{t("settings.display.theme_system")}</option>
+                    <option value="light">{t("settings.display.theme_light")}</option>
+                    <option value="dark">{t("settings.display.theme_dark")}</option>
                   </select>
                 </div>
                 <div className="settings-toggle-row">
@@ -1189,11 +1196,11 @@ export function SettingsView({
                       className="ghost"
                       onClick={() => setCodexPathDraft("")}
                     >
-                      Use PATH
+                      {t("settings.codex.use_path")}
                     </button>
                   </div>
                   <div className="settings-help">
-                    Leave empty to use the system PATH resolution.
+                    {t("settings.codex.path_help")}
                   </div>
                 <div className="settings-field-actions">
                   {codexDirty && (
@@ -1256,7 +1263,7 @@ export function SettingsView({
                       )}
                       {doctorState.result.path && (
                         <div className="settings-doctor-path">
-                          PATH: {doctorState.result.path}
+                          {t("settings.codex.path_prefix")} {doctorState.result.path}
                         </div>
                       )}
                     </div>
@@ -1314,7 +1321,7 @@ export function SettingsView({
                     </option>
                   </select>
                   <div className="settings-help">
-                    Remote mode connects to a separate daemon running the backend on another machine (e.g. WSL2/Linux).
+                    {t("settings.codex.backend_mode_help")}
                   </div>
                 </div>
 
@@ -1359,7 +1366,7 @@ export function SettingsView({
                       />
                     </div>
                     <div className="settings-help">
-                      Start the daemon separately and point CodexMonitor to it (host:port + token).
+                      {t("settings.codex.remote_help")}
                     </div>
                   </div>
                 )}
@@ -1406,7 +1413,7 @@ export function SettingsView({
                               await onUpdateWorkspaceCodexBin(workspace.id, null);
                             }}
                           >
-                            Clear
+                            {t("common.clear")}
                           </button>
                         </div>
                       </div>
