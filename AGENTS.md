@@ -78,6 +78,15 @@ npm run typecheck
 
 - At the end of a task, run `npm run lint` first, then `npm run typecheck`.
 
+## I18n Workflow Constraints
+
+- `main` must track `upstream/main` only (no local i18n changes on `main`).
+- All localization work lives on `i18n` for local usage.
+- Upstream updates must go through a temporary merge branch (e.g. `merge/upstream-YYYYMMDD`) created from `i18n`, then merged back into `i18n` after conflict resolution and verification.
+- Do not regenerate existing keys; reuse current keys and translations, and only add new keys when new strings appear.
+- Always run `npm run lint` → `npm run typecheck` → `npm run test:i18n` after a merge update.
+- Enable `git rerere` to reuse conflict resolutions for recurring upstream changes.
+
 ## Common Changes
 
 - UI layout or styling: update `src/features/*/components/*` and `src/styles/*`.
