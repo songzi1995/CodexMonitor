@@ -25,4 +25,5 @@ dist-ssr
 /release-artifacts
 CodexMonitor.zip
 .codex-worktrees/
+.worktrees/
 .codexmonitor/
