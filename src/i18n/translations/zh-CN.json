@@ -348,6 +348,7 @@
     "show_less": "收起",
     "more": "更多...",
     "load_older": "加载更早的...",
+    "search_older": "搜索更早的...",
     "loading_agents": "正在加载代理",
     "rename": {
       "title": "重命名对话",
