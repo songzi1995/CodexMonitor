@@ -1,35 +1,57 @@
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const srcRoot = path.join(root, "src");
 
 export function detectLiteralStrings(source) {
   const matches = [];
-  const textRegex = />[^<>{}][^<]*</g;
-  let match;
+  const allowedAttributes = new Set([
+    "aria-label",
+    "title",
+    "placeholder",
+    "label",
+    "alt",
+    "data-label",
+    "data-tooltip",
+    "data-value",
+  ]);
+  const hasLetters = /[A-Za-z\u4e00-\u9fff]/;
+  const sourceFile = ts.createSourceFile("scan.tsx", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 
-  while ((match = textRegex.exec(source))) {
-    const text = match[0].slice(1, -1).trim();
-    if (!text) {
-      continue;
+  const record = (type, text, index) => {
+    if (!text || !hasLetters.test(text)) {
+      return;
     }
-    matches.push({ type: "jsx-text", text, index: match.index });
-  }
+    matches.push({ type, text, index });
+  };
 
-  const stringRegex = /(["'`])((?:\\.|(?!\1).)*?)\1/g;
-  while ((match = stringRegex.exec(source))) {
-    const text = match[2];
-    if (!text.trim()) {
-      continue;
+  const walk = (node) => {
+    if (ts.isJsxText(node)) {
+      const text = node.getText(sourceFile).trim();
+      record("jsx-text", text, node.getStart(sourceFile));
     }
-    const before = source.slice(Math.max(0, match.index - 12), match.index);
-    if (/t\s*\($/.test(before)) {
-      continue;
+
+    if (ts.isJsxAttribute(node)) {
+      const name = node.name.getText(sourceFile);
+      if (allowedAttributes.has(name) && node.initializer) {
+        if (ts.isStringLiteral(node.initializer)) {
+          record("jsx-attr", node.initializer.text.trim(), node.initializer.getStart(sourceFile));
+        } else if (ts.isJsxExpression(node.initializer) && node.initializer.expression) {
+          const expr = node.initializer.expression;
+          if (ts.isStringLiteral(expr) || ts.isNoSubstitutionTemplateLiteral(expr)) {
+            record("jsx-attr", expr.text.trim(), expr.getStart(sourceFile));
+          }
+        }
+      }
     }
-    matches.push({ type: "string", text, index: match.index });
-  }
+
+    ts.forEachChild(node, walk);
+  };
+
+  walk(sourceFile);
 
   return matches;
 }
@@ -47,6 +69,9 @@ async function listTsxFiles(dir) {
       continue;
     }
     if (entry.isFile() && entry.name.endsWith(".tsx")) {
+      if (entry.name.endsWith(".test.tsx")) {
+        continue;
+      }
       files.push(fullPath);
     }
   }

@@ -26,7 +26,7 @@ export function PanelTabs({ active, onSelect, tabs }: PanelTabsProps) {
       { id: "prompts", label: t("app.tabs.prompts"), icon: <ScrollText aria-hidden /> },
     ] as PanelTab[]);
   return (
-    <div className="panel-tabs" role="tablist" aria-label="Panel">
+    <div className="panel-tabs" role="tablist" aria-label={t("layout.panel_tabs_label")}>
       {resolvedTabs.map((tab) => {
         const isActive = active === tab.id;
         return (

@@ -40,7 +40,9 @@ export function UpdateToast({ state, onUpdate, onDismiss }: UpdateToastProps) {
         <div className="update-toast-header">
           <div className="update-toast-title">{t("update.title")}</div>
           {state.version ? (
-            <div className="update-toast-version">v{state.version}</div>
+            <div className="update-toast-version">
+              {t("update.version_prefix", { version: state.version })}
+            </div>
           ) : null}
         </div>
         {state.stage === "checking" && (

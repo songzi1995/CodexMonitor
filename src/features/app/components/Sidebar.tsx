@@ -384,7 +384,7 @@ export function Sidebar({
                                 onAddCloneAgent(entry);
                               }}
                             >
-                              New clone agent
+                              {t("workspaces.new_clone_agent")}
                             </button>
                           </div>,
                           document.body,

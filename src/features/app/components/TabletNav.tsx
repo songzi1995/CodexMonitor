@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { GitBranch, MessagesSquare, TerminalSquare } from "lucide-react";
+import { useI18n } from "../../../i18n";
 
 type TabletNavTab = "codex" | "git" | "log";
 
@@ -8,15 +9,15 @@ type TabletNavProps = {
   onSelect: (tab: TabletNavTab) => void;
 };
 
-const tabs: { id: TabletNavTab; label: string; icon: ReactNode }[] = [
-  { id: "codex", label: "Codex", icon: <MessagesSquare className="tablet-nav-icon" /> },
-  { id: "git", label: "Git", icon: <GitBranch className="tablet-nav-icon" /> },
-  { id: "log", label: "Log", icon: <TerminalSquare className="tablet-nav-icon" /> },
-];
-
 export function TabletNav({ activeTab, onSelect }: TabletNavProps) {
+  const { t } = useI18n();
+  const tabs: { id: TabletNavTab; label: string; icon: ReactNode }[] = [
+    { id: "codex", label: t("app.tabs.codex"), icon: <MessagesSquare className="tablet-nav-icon" /> },
+    { id: "git", label: t("app.tabs.git"), icon: <GitBranch className="tablet-nav-icon" /> },
+    { id: "log", label: t("app.tabs.log"), icon: <TerminalSquare className="tablet-nav-icon" /> },
+  ];
   return (
-    <nav className="tablet-nav" aria-label="Workspace">
+    <nav className="tablet-nav" aria-label={t("app.tabs.workspace_label")}>
       <div className="tablet-nav-group">
         {tabs.map((tab) => (
           <button

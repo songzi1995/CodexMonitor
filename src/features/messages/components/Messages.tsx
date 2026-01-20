@@ -5,6 +5,7 @@ import { Markdown } from "./Markdown";
 import { DiffBlock } from "../../git/components/DiffBlock";
 import { languageFromPath } from "../../../utils/syntax";
 import { useFileLinkOpener } from "../hooks/useFileLinkOpener";
+import { useI18n } from "../../../i18n";
 
 type MessagesProps = {
   items: ConversationItem[];
@@ -212,6 +213,7 @@ export const Messages = memo(function Messages({
   lastDurationMs = null,
   workspacePath = null,
 }: MessagesProps) {
+  const { t } = useI18n();
   const SCROLL_THRESHOLD_PX = 120;
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -349,8 +351,8 @@ export const Messages = memo(function Messages({
                   type="button"
                   className={`ghost message-copy-button${isCopied ? " is-copied" : ""}`}
                   onClick={() => handleCopyMessage(item)}
-                  aria-label="Copy message"
-                  title="Copy message"
+                  aria-label={t("messages.copy_message")}
+                  title={t("messages.copy_message")}
                 >
                   <span className="message-copy-icon" aria-hidden>
                     <Copy className="message-copy-icon-copy" size={14} />
@@ -367,7 +369,7 @@ export const Messages = memo(function Messages({
           const trimmedLines = summaryLines.map((line) => line.trim());
           const titleLineIndex = trimmedLines.findIndex(Boolean);
           const rawTitle =
-            titleLineIndex >= 0 ? trimmedLines[titleLineIndex] : "Reasoning";
+            titleLineIndex >= 0 ? trimmedLines[titleLineIndex] : t("messages.reasoning_default");
           const cleanTitle = rawTitle
             .replace(/[`*_~]/g, "")
             .replace(/\[(.*?)\]\(.*?\)/g, "$1")
@@ -375,7 +377,7 @@ export const Messages = memo(function Messages({
           const summaryTitle =
             cleanTitle.length > 80
               ? `${cleanTitle.slice(0, 80)}…`
-              : cleanTitle || "Reasoning";
+              : cleanTitle || t("messages.reasoning_default");
           const reasoningTone: StatusTone = summaryText ? "completed" : "processing";
           const isExpanded = expandedItems.has(item.id);
           const bodyText =
@@ -393,7 +395,7 @@ export const Messages = memo(function Messages({
                 className="tool-inline-bar-toggle"
                 onClick={() => toggleExpanded(item.id)}
                 aria-expanded={expandedItems.has(item.id)}
-                aria-label="Toggle reasoning details"
+                aria-label={t("messages.toggle_reasoning")}
               />
               <div className="tool-inline-content">
                 <button
@@ -424,7 +426,9 @@ export const Messages = memo(function Messages({
         }
         if (item.kind === "review") {
           const title =
-            item.state === "started" ? "Review started" : "Review completed";
+            item.state === "started"
+              ? t("messages.review_started")
+              : t("messages.review_completed");
           return (
             <div key={item.id} className="item-card review">
               <div className="review-header">
@@ -434,7 +438,7 @@ export const Messages = memo(function Messages({
                     item.state === "started" ? "active" : "done"
                   }`}
                 >
-                  Review
+                  {t("messages.review_label")}
                 </span>
               </div>
               {item.text && (
@@ -476,15 +480,15 @@ export const Messages = memo(function Messages({
           const isExpanded = expandedItems.has(item.id);
           const summaryLabel = isFileChange
             ? changeNames.length > 1
-              ? "files edited"
-              : "file edited"
+              ? t("messages.files_edited_plural")
+              : t("messages.file_edited_single")
             : isCommand
               ? ""
             : summary.label;
           const summaryValue = isFileChange
             ? changeNames.length > 1
               ? `${changeNames[0]} +${changeNames.length - 1}`
-              : changeNames[0] || "changes"
+              : changeNames[0] || t("messages.changes_fallback")
             : summary.value;
           const shouldFadeCommand =
             isCommand && !isExpanded && (summaryValue?.length ?? 0) > 80;
@@ -501,7 +505,7 @@ export const Messages = memo(function Messages({
                 className="tool-inline-bar-toggle"
                 onClick={() => toggleExpanded(item.id)}
                 aria-expanded={expandedItems.has(item.id)}
-                aria-label="Toggle tool details"
+                aria-label={t("messages.toggle_tool")}
               />
               <div className="tool-inline-content">
                 <button
@@ -541,7 +545,7 @@ export const Messages = memo(function Messages({
                 )}
                 {isExpanded && isCommand && item.detail && (
                   <div className="tool-inline-detail tool-inline-muted">
-                    cwd: {item.detail}
+                    {t("messages.cwd", { path: item.detail })}
                   </div>
                 )}
                 {isExpanded && isFileChange && hasChanges && (
@@ -602,21 +606,21 @@ export const Messages = memo(function Messages({
           <div className="working-timer">
             <span className="working-timer-clock">{formattedElapsed}</span>
           </div>
-          <span className="working-text">Working…</span>
+          <span className="working-text">{t("messages.working")}</span>
         </div>
       )}
       {!isThinking && lastDurationMs !== null && items.length > 0 && (
         <div className="turn-complete" aria-live="polite">
           <span className="turn-complete-line" aria-hidden />
           <span className="turn-complete-label">
-            Done in {formattedLastDuration}
+            {t("messages.done_in", { duration: formattedLastDuration })}
           </span>
           <span className="turn-complete-line" aria-hidden />
         </div>
       )}
       {!items.length && (
         <div className="empty messages-empty">
-          Start a thread and send a prompt to the agent.
+          {t("messages.empty_prompt")}
         </div>
       )}
       <div ref={bottomRef} />

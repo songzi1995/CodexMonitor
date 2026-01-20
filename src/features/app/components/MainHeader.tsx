@@ -12,6 +12,7 @@ import antigravityIcon from "../../../assets/app-icons/antigravity.png";
 import ghosttyIcon from "../../../assets/app-icons/ghostty.png";
 import vscodeIcon from "../../../assets/app-icons/vscode.png";
 import zedIcon from "../../../assets/app-icons/zed.png";
+import { useI18n } from "../../../i18n";
 
 type MainHeaderProps = {
   workspace: WorkspaceInfo;
@@ -57,6 +58,7 @@ export function MainHeader({
   showTerminalButton = true,
   extraActionsNode,
 }: MainHeaderProps) {
+  const { t } = useI18n();
   const [menuOpen, setMenuOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
@@ -200,16 +202,19 @@ export function MainHeader({
                 aria-haspopup="dialog"
                 aria-expanded={infoOpen}
                 data-tauri-drag-region="false"
-                title="Worktree info"
+                title={t("app.header.worktree_info")}
               >
                 {worktreeLabel || branchName}
               </button>
               {infoOpen && (
                 <div className="worktree-info-popover popover-surface" role="dialog">
-                  <div className="worktree-info-title">Worktree</div>
+                  <div className="worktree-info-title">
+                    {t("app.header.worktree_label")}
+                  </div>
                   <div className="worktree-info-row">
                     <span className="worktree-info-label">
-                      Terminal{parentPath ? " (repo root)" : ""}
+                      {t("app.header.terminal")}
+                      {parentPath ? t("app.header.repo_root_suffix") : ""}
                     </span>
                     <div className="worktree-info-command">
                       <code className="worktree-info-code">
@@ -222,18 +227,20 @@ export function MainHeader({
                           await navigator.clipboard.writeText(cdCommand);
                         }}
                         data-tauri-drag-region="false"
-                        aria-label="Copy command"
-                        title="Copy command"
+                        aria-label={t("app.header.copy_command")}
+                        title={t("app.header.copy_command")}
                       >
                         <Copy aria-hidden />
                       </button>
                     </div>
                     <span className="worktree-info-subtle">
-                      Open this worktree in your terminal.
+                      {t("app.header.open_terminal_hint")}
                     </span>
                   </div>
                   <div className="worktree-info-row">
-                    <span className="worktree-info-label">Reveal</span>
+                    <span className="worktree-info-label">
+                      {t("app.header.reveal")}
+                    </span>
                     <button
                       type="button"
                       className="worktree-info-reveal"
@@ -242,7 +249,7 @@ export function MainHeader({
                       }}
                       data-tauri-drag-region="false"
                     >
-                      Reveal in Finder
+                      {t("files.reveal_finder")}
                     </button>
                   </div>
                 </div>
@@ -278,14 +285,14 @@ export function MainHeader({
                         data-tauri-drag-region="false"
                       >
                         <span className="branch-action-icon">+</span>
-                        Create branch
+                        {t("app.header.create_branch")}
                       </button>
                     ) : (
                       <div className="branch-create">
                         <input
                           value={newBranch}
                           onChange={(event) => setNewBranch(event.target.value)}
-                          placeholder="new-branch-name"
+                          placeholder={t("app.header.new_branch_placeholder")}
                           className="branch-input"
                           autoFocus
                           data-tauri-drag-region="false"
@@ -312,7 +319,7 @@ export function MainHeader({
                           }}
                           data-tauri-drag-region="false"
                         >
-                          Create + checkout
+                          {t("app.header.create_and_checkout")}
                         </button>
                       </div>
                     )}
@@ -348,7 +355,9 @@ export function MainHeader({
                       </button>
                     ))}
                     {recentBranches.length === 0 && (
-                      <div className="branch-empty">No branches found</div>
+                      <div className="branch-empty">
+                        {t("app.header.no_branches")}
+                      </div>
                     )}
                   </div>
                   {error && <div className="branch-error">{error}</div>}
@@ -386,8 +395,8 @@ export function MainHeader({
               data-tauri-drag-region="false"
               aria-haspopup="menu"
               aria-expanded={openMenuOpen}
-              aria-label="Select editor"
-              title="Select editor"
+              aria-label={t("app.header.select_editor")}
+              title={t("app.header.select_editor")}
             >
               <ChevronDown size={14} aria-hidden />
             </button>
@@ -418,8 +427,8 @@ export function MainHeader({
             className={`ghost main-header-action${isTerminalOpen ? " is-active" : ""}`}
             onClick={onToggleTerminal}
             data-tauri-drag-region="false"
-            aria-label="Toggle terminal panel"
-            title="Terminal"
+            aria-label={t("app.header.toggle_terminal")}
+            title={t("app.header.terminal")}
           >
             <Terminal size={14} aria-hidden />
           </button>
@@ -430,8 +439,8 @@ export function MainHeader({
           onClick={handleCopyClick}
           disabled={!canCopyThread || !onCopyThread}
           data-tauri-drag-region="false"
-          aria-label="Copy thread"
-          title="Copy thread"
+        aria-label={t("app.header.copy_thread")}
+        title={t("app.header.copy_thread")}
         >
           <span className="main-header-icon" aria-hidden>
             <Copy className="main-header-icon-copy" size={14} />

@@ -497,7 +497,7 @@ export function useLayoutNodes(options: LayoutNodesOptions): LayoutNodesResult {
         <button
           className="icon-button back-button"
           onClick={options.onExitDiff}
-          aria-label="Back to chat"
+          aria-label={t("layout.back_to_chat")}
         >
           <ArrowLeft aria-hidden />
         </button>
@@ -663,28 +663,28 @@ export function useLayoutNodes(options: LayoutNodesOptions): LayoutNodesResult {
 
   const compactEmptyCodexNode = (
     <div className="compact-empty">
-      <h3>No workspace selected</h3>
-      <p>Choose a project to start chatting.</p>
+      <h3>{t("layout.empty_workspace_title")}</h3>
+      <p>{t("layout.empty_chat_subtitle")}</p>
       <button className="ghost" onClick={options.onGoProjects}>
-        Go to Projects
+        {t("app.actions.go_projects")}
       </button>
     </div>
   );
 
   const compactEmptyGitNode = (
     <div className="compact-empty">
-      <h3>No workspace selected</h3>
-      <p>Select a project to inspect diffs.</p>
+      <h3>{t("layout.empty_workspace_title")}</h3>
+      <p>{t("layout.empty_git_subtitle")}</p>
       <button className="ghost" onClick={options.onGoProjects}>
-        Go to Projects
+        {t("app.actions.go_projects")}
       </button>
     </div>
   );
 
   const compactGitBackNode = (
     <div className="compact-git-back">
-      <button onClick={options.onBackFromDiff}>‹ Back</button>
-      <span className="workspace-title">Diff</span>
+      <button onClick={options.onBackFromDiff}>{t("layout.back")}</button>
+      <span className="workspace-title">{t("git.panel.diff")}</span>
     </div>
   );
 

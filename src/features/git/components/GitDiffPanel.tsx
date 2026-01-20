@@ -164,7 +164,7 @@ export function GitDiffPanel({
   onModeChange,
   filePanelMode,
   onFilePanelModeChange,
-  worktreeApplyLabel = "apply",
+  worktreeApplyLabel,
   worktreeApplyTitle = null,
   worktreeApplyLoading = false,
   worktreeApplyError = null,
@@ -375,11 +375,13 @@ export function GitDiffPanel({
   const showRevertAll = mode === "diff" && Boolean(onRevertAllChanges) && hasAnyChanges;
   const showRevertAllInStaged = showRevertAll && stagedFiles.length > 0;
   const showRevertAllInUnstaged = showRevertAll && unstagedFiles.length > 0;
+  const resolvedWorktreeApplyLabel =
+    worktreeApplyLabel ?? t("app.worktree.apply");
   const worktreeApplyButtonLabel = worktreeApplySuccess
-    ? "applied"
+    ? t("app.worktree.applied")
     : worktreeApplyLoading
-      ? "applying..."
-      : worktreeApplyLabel;
+      ? t("app.worktree.applying")
+      : resolvedWorktreeApplyLabel;
   const worktreeApplyIcon = worktreeApplySuccess ? (
     <Check size={12} aria-hidden />
   ) : (
@@ -455,7 +457,7 @@ export function GitDiffPanel({
       ) : null}
       {mode !== "issues" && hasGitRoot && (
         <div className="git-root-current">
-          <span className="git-root-label">Path:</span>
+          <span className="git-root-label">{t("git.root.path_label")}</span>
           <span className="git-root-path" title={gitRoot ?? ""}>
             {gitRoot}
           </span>
@@ -467,7 +469,7 @@ export function GitDiffPanel({
               disabled={gitRootScanLoading}
             >
               <ArrowLeftRight className="git-root-button-icon" aria-hidden />
-              Change
+              {t("git.root.change_label")}
             </button>
           )}
         </div>
@@ -477,7 +479,9 @@ export function GitDiffPanel({
           {error && <div className="diff-error">{error}</div>}
           {showGitRootPanel && (
             <div className="git-root-panel">
-              <div className="git-root-title">Choose a repo for this workspace.</div>
+              <div className="git-root-title">
+                {t("git.root.choose_repo_title")}
+              </div>
               <div className="git-root-actions">
                 <button
                   type="button"
@@ -485,10 +489,10 @@ export function GitDiffPanel({
                   onClick={onScanGitRoots}
                   disabled={!onScanGitRoots || gitRootScanLoading}
                 >
-                  Scan workspace
+                  {t("git.root.scan_workspace")}
                 </button>
                 <label className="git-root-depth">
-                  <span>Depth</span>
+                  <span>{t("git.root.depth")}</span>
                   <select
                     className="git-root-select"
                     value={gitRootScanDepth}
@@ -516,7 +520,7 @@ export function GitDiffPanel({
                     }}
                     disabled={gitRootScanLoading}
                   >
-                    Pick folder
+                    {t("git.root.pick_folder")}
                   </button>
                 )}
                 {hasGitRoot && onClearGitRoot && (
@@ -526,19 +530,23 @@ export function GitDiffPanel({
                     onClick={onClearGitRoot}
                     disabled={gitRootScanLoading}
                   >
-                    Use workspace root
+                    {t("git.root.use_workspace_root")}
                   </button>
                 )}
               </div>
               {gitRootScanLoading && (
-                <div className="diff-empty">Scanning for repositories...</div>
+                <div className="diff-empty">
+                  {t("git.root.scanning")}
+                </div>
               )}
               {gitRootScanError && <div className="diff-error">{gitRootScanError}</div>}
               {!gitRootScanLoading &&
                 !gitRootScanError &&
                 gitRootScanHasScanned &&
                 gitRootCandidates.length === 0 && (
-                  <div className="diff-empty">No repositories found.</div>
+                  <div className="diff-empty">
+                    {t("git.root.none_found")}
+                  </div>
                 )}
               {gitRootCandidates.length > 0 && (
                 <div className="git-root-list">
@@ -554,7 +562,9 @@ export function GitDiffPanel({
                       onClick={() => onSelectGitRoot?.(path)}
                     >
                       <span className="git-root-path">{path}</span>
-                      {isActive && <span className="git-root-tag">Active</span>}
+                      {isActive && (
+                        <span className="git-root-tag">{t("git.root.active")}</span>
+                      )}
                     </button>
                     );
                   })}
@@ -570,7 +580,9 @@ export function GitDiffPanel({
               {stagedFiles.length > 0 && (
                 <div className="diff-section">
                   <div className="diff-section-title diff-section-title--row">
-                    <span>Staged ({stagedFiles.length})</span>
+                    <span>
+                      {t("git.diff.staged")} ({stagedFiles.length})
+                    </span>
                     {showRevertAllInStaged && (
                       <button
                         type="button"
@@ -578,10 +590,10 @@ export function GitDiffPanel({
                         onClick={() => {
                           void onRevertAllChanges?.();
                         }}
-                        title="Revert all changes"
+                        title={t("git.diff.revert_all")}
                       >
                         <RotateCcw size={12} aria-hidden />
-                        revert
+                        {t("git.diff.revert")}
                       </button>
                     )}
                     {showApplyWorktree && unstagedFiles.length === 0 && (
@@ -650,7 +662,9 @@ export function GitDiffPanel({
               {unstagedFiles.length > 0 && (
                 <div className="diff-section">
                   <div className="diff-section-title diff-section-title--row">
-                    <span>Unstaged ({unstagedFiles.length})</span>
+                    <span>
+                      {t("git.diff.unstaged")} ({unstagedFiles.length})
+                    </span>
                     {showRevertAllInUnstaged && (
                       <button
                         type="button"
@@ -658,10 +672,10 @@ export function GitDiffPanel({
                         onClick={() => {
                           void onRevertAllChanges?.();
                         }}
-                        title="Revert all changes"
+                        title={t("git.diff.revert_all")}
                       >
                         <RotateCcw size={12} aria-hidden />
-                        revert
+                        {t("git.diff.revert")}
                       </button>
                     )}
                     {showApplyWorktree && (
@@ -734,18 +748,22 @@ export function GitDiffPanel({
         <div className="git-log-list">
           {logError && <div className="diff-error">{logError}</div>}
           {!logError && logLoading && (
-            <div className="diff-viewer-loading">Loading commits...</div>
+            <div className="diff-viewer-loading">
+              {t("git.log.loading_commits")}
+            </div>
           )}
           {!logError &&
             !logLoading &&
             !logEntries.length &&
             !showAheadSection &&
             !showBehindSection && (
-            <div className="diff-empty">No commits yet.</div>
+            <div className="diff-empty">{t("git.log.empty")}</div>
           )}
           {showAheadSection && (
             <div className="git-log-section">
-              <div className="git-log-section-title">To push</div>
+              <div className="git-log-section-title">
+                {t("git.log.to_push")}
+              </div>
               <div className="git-log-section-list">
                 {logAheadEntries.map((entry) => (
                   <div
@@ -754,7 +772,7 @@ export function GitDiffPanel({
                     onContextMenu={(event) => showLogMenu(event, entry)}
                   >
                     <div className="git-log-summary">
-                      {entry.summary || "No message"}
+                      {entry.summary || t("git.log.no_message")}
                     </div>
                     <div className="git-log-meta">
                       <span className="git-log-sha">
@@ -762,7 +780,7 @@ export function GitDiffPanel({
                       </span>
                       <span className="git-log-sep">·</span>
                       <span className="git-log-author">
-                        {entry.author || "Unknown"}
+                        {entry.author || t("git.log.unknown_author")}
                       </span>
                       <span className="git-log-sep">·</span>
                       <span className="git-log-date">
@@ -776,7 +794,9 @@ export function GitDiffPanel({
           )}
           {showBehindSection && (
             <div className="git-log-section">
-              <div className="git-log-section-title">To pull</div>
+              <div className="git-log-section-title">
+                {t("git.log.to_pull")}
+              </div>
               <div className="git-log-section-list">
                 {logBehindEntries.map((entry) => (
                   <div
@@ -785,7 +805,7 @@ export function GitDiffPanel({
                     onContextMenu={(event) => showLogMenu(event, entry)}
                   >
                     <div className="git-log-summary">
-                      {entry.summary || "No message"}
+                      {entry.summary || t("git.log.no_message")}
                     </div>
                     <div className="git-log-meta">
                       <span className="git-log-sha">
@@ -793,7 +813,7 @@ export function GitDiffPanel({
                       </span>
                       <span className="git-log-sep">·</span>
                       <span className="git-log-author">
-                        {entry.author || "Unknown"}
+                        {entry.author || t("git.log.unknown_author")}
                       </span>
                       <span className="git-log-sep">·</span>
                       <span className="git-log-date">
@@ -807,7 +827,9 @@ export function GitDiffPanel({
           )}
           {(logEntries.length > 0 || logLoading) && (
             <div className="git-log-section">
-              <div className="git-log-section-title">Recent commits</div>
+              <div className="git-log-section-title">
+                {t("git.log.recent")}
+              </div>
               <div className="git-log-section-list">
                 {logEntries.map((entry) => (
                   <div
@@ -816,13 +838,13 @@ export function GitDiffPanel({
                     onContextMenu={(event) => showLogMenu(event, entry)}
                   >
                     <div className="git-log-summary">
-                      {entry.summary || "No message"}
+                      {entry.summary || t("git.log.no_message")}
                     </div>
                     <div className="git-log-meta">
                       <span className="git-log-sha">{entry.sha.slice(0, 7)}</span>
                       <span className="git-log-sep">·</span>
                       <span className="git-log-author">
-                        {entry.author || "Unknown"}
+                        {entry.author || t("git.log.unknown_author")}
                       </span>
                       <span className="git-log-sep">·</span>
                       <span className="git-log-date">
@@ -872,13 +894,14 @@ export function GitDiffPanel({
           {!pullRequestsError &&
             !pullRequestsLoading &&
             !pullRequests.length && (
-            <div className="diff-empty">No open pull requests.</div>
+            <div className="diff-empty">{t("git.prs.empty")}</div>
           )}
           {pullRequests.map((pullRequest) => {
             const relativeTime = formatRelativeTime(
               new Date(pullRequest.updatedAt).getTime(),
             );
-            const author = pullRequest.author?.login ?? "unknown";
+            const author =
+              pullRequest.author?.login ?? t("git.prs.unknown_author");
             const isSelected = selectedPullRequest === pullRequest.number;
             return (
               <div
@@ -907,7 +930,9 @@ export function GitDiffPanel({
                 </div>
                 <div className="git-pr-meta">
                   {pullRequest.isDraft && (
-                    <span className="git-pr-pill git-pr-draft">Draft</span>
+                    <span className="git-pr-pill git-pr-draft">
+                      {t("git.pr.draft")}
+                    </span>
                   )}
                 </div>
               </div>

@@ -18,7 +18,7 @@ export function TabBar({ activeTab, onSelect }: TabBarProps) {
     { id: "log", label: t("app.tabs.log"), icon: <TerminalSquare className="tabbar-icon" /> },
   ];
   return (
-    <nav className="tabbar" aria-label="Primary">
+    <nav className="tabbar" aria-label={t("app.tabs.primary_label")}>
       {tabs.map((tab) => (
         <button
           key={tab.id}
